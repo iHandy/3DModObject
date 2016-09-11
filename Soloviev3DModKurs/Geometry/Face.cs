@@ -19,6 +19,11 @@ namespace Soloviev3DModKurs.Geometry
             mEdges.Add(edge);
         }
 
+        public List<Edge> getEdges()
+        {
+            return mEdges;
+        }
+
         public void draw(System.Drawing.Graphics graphics, System.Drawing.Pen pen)
         {
             foreach (Edge oneEdge in mEdges)

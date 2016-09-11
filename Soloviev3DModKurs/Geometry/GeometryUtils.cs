@@ -27,5 +27,23 @@ namespace Soloviev3DModKurs.Geometry
 
             return points;
         }
+
+        public static int[] matrixMultiplication(int[] a, int[,] b)
+        {
+            int[] r = new int[a.GetLength(0)];
+            for (int i = 0; i < a.GetLength(0); i++)
+                for (int j = 0; j < a.GetLength(0); j++)
+                    r[i] += b[j, i] * a[j];
+            return r;
+        }
+
+        public static double[] matrixMultiplication(double[] a, double[,] b)
+        {
+            double[] r = new double[a.GetLength(0)];
+            for (int i = 0; i < a.GetLength(0); i++)
+                for (int j = 0; j < a.GetLength(0); j++)
+                    r[i] += b[j, i] * a[j];
+            return r;
+        }
     }
 }

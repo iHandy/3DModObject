@@ -11,7 +11,7 @@ namespace Soloviev3DModKurs.Geometry
         private double mRadius;
 
         public Cylinder(double mHeightTrunc, double radiusCyl, int n, double widthOffset, double heightOffset)
-            : base(n, widthOffset, heightOffset)
+            : base(n, widthOffset, heightOffset, -mHeightTrunc - mHeightTrunc)
         {
             this.mHeightTrunc = mHeightTrunc;
             this.mRadius = radiusCyl;
@@ -23,10 +23,10 @@ namespace Soloviev3DModKurs.Geometry
         {
             List<Point3D> pointsTop = new List<Point3D>(n);
             List<Point3D> pointsBottom = GeometryUtils.approximationCircle(n, 0, mRadius, mWidthOffset, mHeightOffset);
-            
+
             foreach (var item in pointsBottom)
             {
-                pointsTop.Add(new Point3D(item.X, item.Y - mHeightTrunc, item.Z)); 
+                pointsTop.Add(new Point3D(item.X, item.Y - mHeightTrunc, item.Z));
             }
 
             initFaces(pointsTop, pointsBottom);
@@ -39,6 +39,12 @@ namespace Soloviev3DModKurs.Geometry
             {
                 item.draw(graphics, pen);
             }
+        }
+
+
+        public void move(int dx, int dy, int dz)
+        {
+            initMove(dx, dy, dz);
         }
     }
 }

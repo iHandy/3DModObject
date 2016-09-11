@@ -16,10 +16,8 @@ namespace Soloviev3DModKurs.Geometry
 
         private Cylinder mCylinderInside;
 
-        
-
         public Cone(double heightFull, double heightTrunc, double radiusMax, double radiusCyl, int n, double widthOffset, double heightOffset)
-            : base(n, widthOffset, heightOffset)
+            : base(n, widthOffset, heightOffset, -heightTrunc - heightTrunc)
         {
             this.mHeightFull = heightFull;
             this.mHeightTrunc = heightTrunc;
@@ -33,7 +31,7 @@ namespace Soloviev3DModKurs.Geometry
 
         private void buildGeometry()
         {
-            List<Point3D> pointsTop = GeometryUtils.approximationCircle(n, mHeightTrunc, mRadiusMin, mWidthOffset, mHeightOffset-mHeightTrunc-mHeightTrunc);
+            List<Point3D> pointsTop = GeometryUtils.approximationCircle(n, mHeightTrunc, mRadiusMin, mWidthOffset, mHeightOffset + mCompensationY);
             List<Point3D> pointsBottom = GeometryUtils.approximationCircle(n, 0, mRadiusMax, mWidthOffset, mHeightOffset);
 
             initFaces(pointsTop, pointsBottom);
@@ -53,6 +51,25 @@ namespace Soloviev3DModKurs.Geometry
                 item.draw(graphics, pen);
             }
             mCylinderInside.draw(graphics, pen);
+        }
+
+
+        public void move(double dx, double dy, double dz)
+        {
+            initMove(dx, dy, dz);
+            mCylinderInside.initMove(dx, dy, dz);
+        }
+
+        public void scale(double sX, double sY, double sZ)
+        {
+            initScale(sX, sY, sZ);
+            mCylinderInside.initScale(sX, sY, sZ);
+        }
+
+        public void rotate(double angleX, double angleY, double angleZ)
+        {
+            initRotate(angleX, angleY, angleZ);
+            mCylinderInside.initRotate(angleX, angleY, angleZ);
         }
     }
 }

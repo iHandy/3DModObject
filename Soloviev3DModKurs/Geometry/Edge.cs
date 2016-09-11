@@ -24,6 +24,16 @@ namespace Soloviev3DModKurs.Geometry
             mPoints.Add(point2);
         }
 
+        public List<Point3D> getPoints()
+        {
+            return mPoints;
+        }
+
+        public void setPoints(List<Point3D> newPoints)
+        {
+            mPoints = newPoints;
+        }
+
         public void draw(Graphics graphics, Pen pen)
         {
             graphics.DrawLine(pen, 
