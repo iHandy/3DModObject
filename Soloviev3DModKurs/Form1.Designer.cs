@@ -320,7 +320,7 @@
             this.groupBox3.Size = new System.Drawing.Size(105, 47);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Move (T)";
+            this.groupBox3.Text = "Transfer (T)";
             // 
             // radioButton1
             // 
