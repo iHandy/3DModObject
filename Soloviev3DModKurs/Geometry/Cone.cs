@@ -71,5 +71,32 @@ namespace Soloviev3DModKurs.Geometry
             initRotate(angleX, angleY, angleZ);
             mCylinderInside.initRotate(angleX, angleY, angleZ);
         }
+
+        internal void projection(Projection projection)
+        {
+            initProjection(projection);
+            mCylinderInside.initProjection(projection);
+        }
+
+        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset,double Yoffset, double Zoffset)
+        {
+            foreach (var item in base.mFaces)
+            {
+                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset/*-(mCompensationY-mHeightOffset )*/);
+            }
+            mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset/* - (mCompensationY - mHeightOffset)*/);
+        }
+
+        internal void axonoProjection(Projection projection, double psi, double fi)
+        {
+            initAxonoProjection(projection, psi, fi);
+            mCylinderInside.initAxonoProjection(projection, psi, fi);
+        }
+
+        internal void obliqueProjection(Projection projection, double l, double alpha)
+        {
+            initObliqueProjection(projection, l, alpha);
+            mCylinderInside.initObliqueProjection(projection, l, alpha);
+        }
     }
 }

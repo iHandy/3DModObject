@@ -31,5 +31,14 @@ namespace Soloviev3DModKurs.Geometry
                 oneEdge.draw(graphics, pen);
             }
         }
+
+
+        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset,double Yoffset, double Zoffset)
+        {
+            foreach (Edge oneEdge in mEdges)
+            {
+                oneEdge.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
+            }
+        }
     }
 }

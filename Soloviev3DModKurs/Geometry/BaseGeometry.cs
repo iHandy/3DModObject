@@ -153,5 +153,147 @@ namespace Soloviev3DModKurs.Geometry
                 }
             }
         }
+
+        public void initProjection(Projection projection)
+        {
+            double[,] projectionMatrix = null;
+
+            switch (projection)
+            {
+                case Projection.FRONT:
+                    projectionMatrix = new double[,] { 
+                        { 1, 0, 0, 0 }, 
+                        { 0, 1, 0, 0 }, 
+                        { 0, 0, 0, 0 }, 
+                        { 0, 0, 0, 1 } };
+                    break;
+                case Projection.PROFILE:
+                    projectionMatrix = new double[,] { 
+                        { 0, 0, 0, 0 }, 
+                        { 0, 1, 0, 0 }, 
+                        { 0, 0, 1, 0 }, 
+                        { 0, 0, 0, 1 } };
+                    break;
+                case Projection.HORIZONTAL:
+                    projectionMatrix = new double[,] { 
+                        { 1, 0, 0, 0 }, 
+                        { 0, 0, 0, 0 }, 
+                        { 0, 0, 1, 0 }, 
+                        { 0, 0, 0, 1 } };
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (var itemFace in mFaces)
+            {
+                foreach (var itemEdge in itemFace.getEdges())
+                {
+                    List<Point3D> pointsBefore = itemEdge.getPoints();
+                    List<Point3D> pointsAfter = new List<Point3D>(pointsBefore.Count);
+
+                    foreach (var itemPoint in pointsBefore)
+                    {
+                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
+                        double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+                        Point3D pointAfter = new Point3D(after[0], after[1], after[2]);
+
+                        pointsAfter.Add(pointAfter);
+                    }
+
+                    itemEdge.setPoints(pointsAfter);
+                }
+            }
+        }
+
+        public void initAxonoProjection(Projection projection, double psi, double fi)
+        {
+            psi = psi * Math.PI / 180;
+            fi = fi * Math.PI / 180;
+
+            double sinPsi = Math.Sin(psi);
+            double cosPsi = Math.Cos(psi);
+
+            double sinFi = Math.Sin(fi);
+            double cosFi = Math.Cos(fi);
+
+            double[,] projectionMatrix = null;
+
+            switch (projection)
+            {
+                case Projection.AXONOMETRIC:
+                    projectionMatrix = new double[,] { 
+                        { cosPsi, sinFi*sinPsi, 0, 0 }, 
+                        { 0, cosFi, 0, 0 }, 
+                        { sinPsi, -sinFi*cosPsi, 0, 0 }, 
+                        { 0, 0, 0, 1 } };
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (var itemFace in mFaces)
+            {
+                foreach (var itemEdge in itemFace.getEdges())
+                {
+                    List<Point3D> pointsBefore = itemEdge.getPoints();
+                    List<Point3D> pointsAfter = new List<Point3D>(pointsBefore.Count);
+
+                    foreach (var itemPoint in pointsBefore)
+                    {
+                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
+                        double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+                        Point3D pointAfter = new Point3D(after[0], after[1], after[2]);
+
+                        pointsAfter.Add(pointAfter);
+                    }
+
+                    itemEdge.setPoints(pointsAfter);
+                }
+            }
+        }
+
+        public void initObliqueProjection(Projection projection, double l, double alpha)
+        {
+            alpha= alpha * Math.PI / 180;
+
+            double sinAlpha = Math.Sin(alpha);
+            double cosAlpha = Math.Cos(alpha);
+
+            double[,] projectionMatrix = null;
+
+            switch (projection)
+            {
+                case Projection.OBLIQUE:
+                    projectionMatrix = new double[,] { 
+                        { 1, 0, 0, 0 }, 
+                        { 0, 1, 0, 0 }, 
+                        { l*cosAlpha, l*sinAlpha, 0, 0 }, 
+                        { 0, 0, 0, 1 } };
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (var itemFace in mFaces)
+            {
+                foreach (var itemEdge in itemFace.getEdges())
+                {
+                    List<Point3D> pointsBefore = itemEdge.getPoints();
+                    List<Point3D> pointsAfter = new List<Point3D>(pointsBefore.Count);
+
+                    foreach (var itemPoint in pointsBefore)
+                    {
+                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
+                        double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+                        Point3D pointAfter = new Point3D(after[0], after[1], after[2]);
+
+                        pointsAfter.Add(pointAfter);
+                    }
+
+                    itemEdge.setPoints(pointsAfter);
+                }
+            }
+        }
     }
 }

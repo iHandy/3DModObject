@@ -46,5 +46,14 @@ namespace Soloviev3DModKurs.Geometry
         {
             initMove(dx, dy, dz);
         }
+
+
+        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        {
+            foreach (var item in base.mFaces)
+            {
+                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
+            }
+        }
     }
 }

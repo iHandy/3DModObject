@@ -36,9 +36,35 @@ namespace Soloviev3DModKurs.Geometry
 
         public void draw(Graphics graphics, Pen pen)
         {
-            graphics.DrawLine(pen, 
-                new PointF((float)mPoints[0].X, (float)mPoints[0].Y), 
+            graphics.DrawLine(pen,
+                new PointF((float)mPoints[0].X, (float)mPoints[0].Y),
                 new PointF((float)mPoints[1].X, (float)mPoints[1].Y));
+        }
+
+
+        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        {            
+            switch (projection)
+            {
+                case Projection.FRONT:
+                    graphics.DrawLine(pen,
+               new PointF((float)mPoints[0].X, (float)mPoints[0].Y),
+               new PointF((float)mPoints[1].X, (float)mPoints[1].Y));
+                    break;
+                case Projection.PROFILE:
+                    graphics.DrawLine(pen,
+               new PointF((float)(mPoints[0].Z+Xoffset), (float)mPoints[0].Y),
+               new PointF((float)(mPoints[1].Z+Xoffset), (float)mPoints[1].Y));
+                    break;
+                case Projection.HORIZONTAL:
+                    graphics.DrawLine(pen,
+               new PointF((float)mPoints[0].X, (float)(mPoints[0].Z+Yoffset)),
+               new PointF((float)mPoints[1].X, (float)(mPoints[1].Z+Yoffset)));
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
