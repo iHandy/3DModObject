@@ -154,6 +154,7 @@ namespace Soloviev3DModKurs.Geometry
         public void initProjection(Projection projection, params double[] projParams)
         {
             double[,] projectionMatrix = null;
+            double[,] viewMatrix = null;
             double d = 1;
 
             switch (projection)
@@ -217,6 +218,21 @@ namespace Soloviev3DModKurs.Geometry
                         { 0, 1, 0, 0 },
                         { 0, 0, 1, 1/d },
                         { 0, 0, 0, 0 } };
+
+                    double theta = projParams[1] * Math.PI / 180;
+                    double fi2 = projParams[2] * Math.PI / 180;
+                    double ro = projParams[3];
+
+                    double sinTheta = Math.Sin(theta);
+                    double cosTheta = Math.Cos(theta);
+                    double sinFi2 = Math.Sin(fi2);
+                    double cosFi2 = Math.Cos(fi2);
+
+                    viewMatrix = new double[,] {
+                        { -sinTheta, -cosFi2*cosTheta, -sinFi2*cosTheta, 0 },
+                        { cosTheta, -cosFi2*sinTheta, -sinFi2*sinTheta, 0 },
+                        { 0, sinFi2, -cosTheta, 0 },
+                        { 0, 0, ro, 1 } };
                     break;
                 default:
                     break;
@@ -233,13 +249,18 @@ namespace Soloviev3DModKurs.Geometry
                     {
                         double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
                         double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+                        if (viewMatrix != null)
+                        {
+                            before = (double[])after.Clone();
+                            after = GeometryUtils.matrixMultiplication(before, viewMatrix);
+                        }
                         Point3D pointAfter;
-                        double z = after[2];
+                        double p4 = after[3];
+                        if (p4 == 0) p4 = 0.1;
 
                         if (projection.Equals(Projection.PERSPECTIVE))
                         {
-                            if (z < 1) z = 1;
-                            pointAfter = new Point3D(after[0] * d / z, after[1] * d / z, d);
+                            pointAfter = new Point3D(after[0] / p4, after[1] / p4, after[2] / p4);
                         }
                         else
                         {

@@ -390,7 +390,10 @@ namespace Soloviev3DModKurs
         private void buttonPerspective_Click(object sender, EventArgs e)
         {
             onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
-                Double.Parse(numericUpDownD.Value.ToString()));
+                Double.Parse(numericUpDownD.Value.ToString()),
+                Double.Parse(numericUpDownTheta.Value.ToString()),
+                Double.Parse(numericUpDownFi2.Value.ToString()),
+                Double.Parse(numericUpDownRo.Value.ToString()));
         }
 
         private void initLabelColors()

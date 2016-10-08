@@ -91,6 +91,13 @@
             this.buttonFront = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownFi2 = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.numericUpDownTheta = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.numericUpDownRo = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -114,6 +121,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -597,6 +608,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.groupBox10);
             this.groupBox5.Controls.Add(this.groupBox9);
             this.groupBox5.Controls.Add(this.checkBoxProjChanges);
             this.groupBox5.Controls.Add(this.groupBox8);
@@ -617,9 +629,9 @@
             this.groupBox9.Controls.Add(this.labelBottomColorCone);
             this.groupBox9.Controls.Add(this.labelTopColorCone);
             this.groupBox9.Controls.Add(this.textBoxInfo);
-            this.groupBox9.Location = new System.Drawing.Point(7, 359);
+            this.groupBox9.Location = new System.Drawing.Point(6, 369);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(189, 206);
+            this.groupBox9.Size = new System.Drawing.Size(189, 213);
             this.groupBox9.TabIndex = 26;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Info:";
@@ -671,13 +683,13 @@
             this.textBoxInfo.Multiline = true;
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
-            this.textBoxInfo.Size = new System.Drawing.Size(175, 116);
+            this.textBoxInfo.Size = new System.Drawing.Size(175, 123);
             this.textBoxInfo.TabIndex = 0;
             // 
             // checkBoxProjChanges
             // 
             this.checkBoxProjChanges.AutoSize = true;
-            this.checkBoxProjChanges.Location = new System.Drawing.Point(34, 328);
+            this.checkBoxProjChanges.Location = new System.Drawing.Point(33, 262);
             this.checkBoxProjChanges.Name = "checkBoxProjChanges";
             this.checkBoxProjChanges.Size = new System.Drawing.Size(131, 17);
             this.checkBoxProjChanges.TabIndex = 25;
@@ -689,9 +701,9 @@
             this.groupBox8.Controls.Add(this.buttonPerspective);
             this.groupBox8.Controls.Add(this.numericUpDownD);
             this.groupBox8.Controls.Add(this.label11);
-            this.groupBox8.Location = new System.Drawing.Point(7, 235);
+            this.groupBox8.Location = new System.Drawing.Point(7, 188);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(189, 77);
+            this.groupBox8.Size = new System.Drawing.Size(189, 72);
             this.groupBox8.TabIndex = 25;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Perspective";
@@ -745,16 +757,16 @@
             this.groupBox7.Controls.Add(this.label8);
             this.groupBox7.Controls.Add(this.numericUpDownL);
             this.groupBox7.Controls.Add(this.label9);
-            this.groupBox7.Location = new System.Drawing.Point(7, 127);
+            this.groupBox7.Location = new System.Drawing.Point(7, 112);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(189, 100);
+            this.groupBox7.Size = new System.Drawing.Size(189, 72);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Oblique";
             // 
             // buttonOblique
             // 
-            this.buttonOblique.Location = new System.Drawing.Point(58, 60);
+            this.buttonOblique.Location = new System.Drawing.Point(58, 42);
             this.buttonOblique.Name = "buttonOblique";
             this.buttonOblique.Size = new System.Drawing.Size(75, 23);
             this.buttonOblique.TabIndex = 24;
@@ -770,7 +782,7 @@
             0,
             0,
             0});
-            this.numericUpDownAlpha.Location = new System.Drawing.Point(88, 34);
+            this.numericUpDownAlpha.Location = new System.Drawing.Point(137, 16);
             this.numericUpDownAlpha.Maximum = new decimal(new int[] {
             360,
             0,
@@ -788,7 +800,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(55, 37);
+            this.label8.Location = new System.Drawing.Point(105, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 13);
             this.label8.TabIndex = 22;
@@ -796,7 +808,7 @@
             // 
             // numericUpDownL
             // 
-            this.numericUpDownL.Location = new System.Drawing.Point(88, 13);
+            this.numericUpDownL.Location = new System.Drawing.Point(41, 16);
             this.numericUpDownL.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -814,7 +826,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(55, 16);
+            this.label9.Location = new System.Drawing.Point(14, 19);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(21, 13);
             this.label9.TabIndex = 20;
@@ -830,9 +842,9 @@
             this.groupBox6.Controls.Add(this.buttonHorizontal);
             this.groupBox6.Controls.Add(this.buttonProfile);
             this.groupBox6.Controls.Add(this.buttonFront);
-            this.groupBox6.Location = new System.Drawing.Point(7, 20);
+            this.groupBox6.Location = new System.Drawing.Point(7, 12);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(189, 100);
+            this.groupBox6.Size = new System.Drawing.Size(189, 94);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Parallel";
@@ -958,6 +970,104 @@
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.numericUpDownRo);
+            this.groupBox10.Controls.Add(this.label17);
+            this.groupBox10.Controls.Add(this.numericUpDownFi2);
+            this.groupBox10.Controls.Add(this.label15);
+            this.groupBox10.Controls.Add(this.numericUpDownTheta);
+            this.groupBox10.Controls.Add(this.label16);
+            this.groupBox10.Location = new System.Drawing.Point(7, 285);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(189, 77);
+            this.groupBox10.TabIndex = 25;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Showing";
+            // 
+            // numericUpDownFi2
+            // 
+            this.numericUpDownFi2.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownFi2.Location = new System.Drawing.Point(41, 42);
+            this.numericUpDownFi2.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numericUpDownFi2.Name = "numericUpDownFi2";
+            this.numericUpDownFi2.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDownFi2.TabIndex = 23;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(14, 44);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(27, 13);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "φ = ";
+            // 
+            // numericUpDownTheta
+            // 
+            this.numericUpDownTheta.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownTheta.Location = new System.Drawing.Point(41, 16);
+            this.numericUpDownTheta.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numericUpDownTheta.Name = "numericUpDownTheta";
+            this.numericUpDownTheta.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDownTheta.TabIndex = 21;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(14, 19);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(25, 13);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "θ = ";
+            // 
+            // numericUpDownRo
+            // 
+            this.numericUpDownRo.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownRo.Location = new System.Drawing.Point(122, 31);
+            this.numericUpDownRo.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDownRo.Minimum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownRo.Name = "numericUpDownRo";
+            this.numericUpDownRo.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownRo.TabIndex = 26;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(97, 34);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(25, 13);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "ρ = ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1005,6 +1115,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1074,6 +1189,13 @@
         private System.Windows.Forms.Label labelBottomColorCyl;
         private System.Windows.Forms.Label labelTopColorCyl;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.NumericUpDown numericUpDownRo;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown numericUpDownFi2;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown numericUpDownTheta;
+        private System.Windows.Forms.Label label16;
     }
 }
 
