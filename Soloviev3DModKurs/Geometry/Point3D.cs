@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Soloviev3DModKurs.Geometry
 {
-    public class Point3D
+    public class Point3D : ICloneable
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -24,6 +24,11 @@ namespace Soloviev3DModKurs.Geometry
             this.X = x;
             this.Y = y;
             this.Z = 0;
+        }
+
+        public object Clone()
+        {
+            return new Point3D(X, Y, Z);
         }
     }
 }

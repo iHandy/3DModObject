@@ -9,7 +9,7 @@ namespace Soloviev3DModKurs.Geometry
 {
     class GeometryUtils
     {
-        public static List<Point3D> approximationCircle(int n, double y, double radius, double widthOffset, double heightOffset)
+        public static List<Point3D> approximationCircle(int n, double y, double radius)
         {
             double alpha = 2.0 * Math.PI / (double)n;
             // 2 = 360/180
@@ -19,10 +19,10 @@ namespace Soloviev3DModKurs.Geometry
             {
                 currentAlpha = currentAlpha + alpha;//alpha * i;
 
-                double x = radius * Math.Cos(currentAlpha) + widthOffset;
+                double x = radius * Math.Cos(currentAlpha);
                 double z = radius * Math.Sin(currentAlpha);
 
-                points.Add(new Point3D(x, y + heightOffset, z));
+                points.Add(new Point3D(x, y, z));
             }
 
             return points;

@@ -18,5 +18,6 @@ namespace Soloviev3DModKurs
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+
     }
 }

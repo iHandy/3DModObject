@@ -9,18 +9,14 @@ namespace Soloviev3DModKurs.Geometry
     class BaseGeometry
     {
         protected int n;
-        protected double mWidthOffset;
-        protected double mHeightOffset;
 
         protected List<Face> mFaces;
 
         protected double mCompensationY;
 
-        public BaseGeometry(int n, double widthOffset, double heightOffset, double compensationY)
+        public BaseGeometry(int n, double compensationY)
         {
             this.n = n;
-            this.mWidthOffset = widthOffset;
-            this.mHeightOffset = heightOffset;
             this.mCompensationY = compensationY;
             mFaces = new List<Face>(n);
         }
@@ -33,10 +29,10 @@ namespace Soloviev3DModKurs.Geometry
                 for (int j = 0; j < 4; j++)
                 {
                     int secondElt = i < (n - 1) ? i + 1 : 0;
-                    oneFace.addEdge(new Edge(pointsTop[i], pointsBottom[i]));
-                    oneFace.addEdge(new Edge(pointsBottom[i], pointsBottom[secondElt]));
-                    oneFace.addEdge(new Edge(pointsBottom[secondElt], pointsTop[secondElt]));
-                    oneFace.addEdge(new Edge(pointsTop[secondElt], pointsTop[i]));
+                    oneFace.addEdge(new Edge(pointsTop[i], pointsBottom[i], Edge.EdgeType.VERTICAL));
+                    oneFace.addEdge(new Edge(pointsBottom[i], pointsBottom[secondElt], Edge.EdgeType.BOTTOM));
+                    oneFace.addEdge(new Edge(pointsBottom[secondElt], pointsTop[secondElt], Edge.EdgeType.VERTICAL));
+                    oneFace.addEdge(new Edge(pointsTop[secondElt], pointsTop[i], Edge.EdgeType.TOP));
                 }
                 mFaces.Add(oneFace);
             }
@@ -44,10 +40,10 @@ namespace Soloviev3DModKurs.Geometry
 
         public void initMove(double dX, double dY, double dZ)
         {
-            double[,] moveMatrix = new double[,] { 
-                        { 1, 0, 0, 0 }, 
-                        { 0, 1, 0, 0 }, 
-                        { 0, 0, 1, 0 }, 
+            double[,] moveMatrix = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { 0, 0, 1, 0 },
                         { dX, dY, dZ, 1 } };
 
             foreach (var itemFace in mFaces)
@@ -59,7 +55,7 @@ namespace Soloviev3DModKurs.Geometry
 
                     foreach (var itemPoint in pointsBefore)
                     {
-                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };  
+                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
                         double[] after = GeometryUtils.matrixMultiplication(before, moveMatrix);
                         Point3D pointAfter = new Point3D(after[0], after[1], after[2]);
                         pointsAfter.Add(pointAfter);
@@ -72,10 +68,10 @@ namespace Soloviev3DModKurs.Geometry
 
         public void initScale(double sX, double sY, double sZ)
         {
-            double[,] scaleMatrix = new double[,] { 
-                        { sX, 0, 0, 0 }, 
-                        { 0, sY, 0, 0 }, 
-                        { 0, 0, sZ, 0 }, 
+            double[,] scaleMatrix = new double[,] {
+                        { sX, 0, 0, 0 },
+                        { 0, sY, 0, 0 },
+                        { 0, 0, sZ, 0 },
                         { 0, 0, 0, 1 } };
 
             foreach (var itemFace in mFaces)
@@ -106,29 +102,29 @@ namespace Soloviev3DModKurs.Geometry
 
             double sinX = Math.Sin(rX);
             double cosX = Math.Cos(rX);
-            
+
             double sinY = Math.Sin(rY);
             double cosY = Math.Cos(rY);
 
             double sinZ = Math.Sin(rZ);
             double cosZ = Math.Cos(rZ);
 
-            double[,] rotateMatrixX = new double[,] { 
-                        { 1, 0, 0, 0 }, 
-                        { 0, cosX, sinX, 0 }, 
-                        { 0, -sinX, cosX, 0 }, 
+            double[,] rotateMatrixX = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, cosX, sinX, 0 },
+                        { 0, -sinX, cosX, 0 },
                         { 0, 0, 0, 1 } };
-            
-            double[,] rotateMatrixY = new double[,] { 
-                        { cosY, 0, -sinY, 0 }, 
-                        { 0, 1, 0, 0 }, 
-                        { sinY, 0, cosY, 0 }, 
+
+            double[,] rotateMatrixY = new double[,] {
+                        { cosY, 0, -sinY, 0 },
+                        { 0, 1, 0, 0 },
+                        { sinY, 0, cosY, 0 },
                         { 0, 0, 0, 1 } };
-           
-            double[,] rotateMatrixZ = new double[,] { 
-                        { cosZ, sinZ, 0, 0 }, 
-                        { -sinZ, cosZ, 0, 0 }, 
-                        { 0, 0, 1, 0 }, 
+
+            double[,] rotateMatrixZ = new double[,] {
+                        { cosZ, sinZ, 0, 0 },
+                        { -sinZ, cosZ, 0, 0 },
+                        { 0, 0, 1, 0 },
                         { 0, 0, 0, 1 } };
 
             foreach (var itemFace in mFaces)
@@ -161,24 +157,24 @@ namespace Soloviev3DModKurs.Geometry
             switch (projection)
             {
                 case Projection.FRONT:
-                    projectionMatrix = new double[,] { 
-                        { 1, 0, 0, 0 }, 
-                        { 0, 1, 0, 0 }, 
-                        { 0, 0, 0, 0 }, 
+                    projectionMatrix = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { 0, 0, 0, 0 },
                         { 0, 0, 0, 1 } };
                     break;
                 case Projection.PROFILE:
-                    projectionMatrix = new double[,] { 
-                        { 0, 0, 0, 0 }, 
-                        { 0, 1, 0, 0 }, 
-                        { 0, 0, 1, 0 }, 
+                    projectionMatrix = new double[,] {
+                        { 0, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { 0, 0, 1, 0 },
                         { 0, 0, 0, 1 } };
                     break;
                 case Projection.HORIZONTAL:
-                    projectionMatrix = new double[,] { 
-                        { 1, 0, 0, 0 }, 
-                        { 0, 0, 0, 0 }, 
-                        { 0, 0, 1, 0 }, 
+                    projectionMatrix = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, 0, 0, 0 },
+                        { 0, 0, 1, 0 },
                         { 0, 0, 0, 1 } };
                     break;
                 default:
@@ -222,10 +218,10 @@ namespace Soloviev3DModKurs.Geometry
             switch (projection)
             {
                 case Projection.AXONOMETRIC:
-                    projectionMatrix = new double[,] { 
-                        { cosPsi, sinFi*sinPsi, 0, 0 }, 
-                        { 0, cosFi, 0, 0 }, 
-                        { sinPsi, -sinFi*cosPsi, 0, 0 }, 
+                    projectionMatrix = new double[,] {
+                        { cosPsi, sinFi*sinPsi, 0, 0 },
+                        { 0, cosFi, 0, 0 },
+                        { sinPsi, -sinFi*cosPsi, 0, 0 },
                         { 0, 0, 0, 1 } };
                     break;
                 default:
@@ -255,7 +251,7 @@ namespace Soloviev3DModKurs.Geometry
 
         public void initObliqueProjection(Projection projection, double l, double alpha)
         {
-            alpha= alpha * Math.PI / 180;
+            alpha = alpha * Math.PI / 180;
 
             double sinAlpha = Math.Sin(alpha);
             double cosAlpha = Math.Cos(alpha);
@@ -265,10 +261,10 @@ namespace Soloviev3DModKurs.Geometry
             switch (projection)
             {
                 case Projection.OBLIQUE:
-                    projectionMatrix = new double[,] { 
-                        { 1, 0, 0, 0 }, 
-                        { 0, 1, 0, 0 }, 
-                        { l*cosAlpha, l*sinAlpha, 0, 0 }, 
+                    projectionMatrix = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { l*cosAlpha, l*sinAlpha, 0, 0 },
                         { 0, 0, 0, 1 } };
                     break;
                 default:
@@ -287,6 +283,48 @@ namespace Soloviev3DModKurs.Geometry
                         double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
                         double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
                         Point3D pointAfter = new Point3D(after[0], after[1], after[2]);
+
+                        pointsAfter.Add(pointAfter);
+                    }
+
+                    itemEdge.setPoints(pointsAfter);
+                }
+            }
+        }
+
+        public void initPerspectiveProjection(Projection projection, double d)
+        {
+            if (d == 0) d = 0.1;
+
+            double[,] projectionMatrix = null;
+
+            switch (projection)
+            {
+                case Projection.PERSPECTIVE:
+                    projectionMatrix = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { 0, 0, 1, 1/d },
+                        { 0, 0, 0, 0 } };
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (var itemFace in mFaces)
+            {
+                foreach (var itemEdge in itemFace.getEdges())
+                {
+                    List<Point3D> pointsBefore = itemEdge.getPoints();
+                    List<Point3D> pointsAfter = new List<Point3D>(pointsBefore.Count);
+
+                    foreach (var itemPoint in pointsBefore)
+                    {
+                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
+                        double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+                        double z = after[2];
+                        if (z == 0) z = 0.1;
+                        Point3D pointAfter = new Point3D(after[0] * d / z, after[1] * d / z, d);
 
                         pointsAfter.Add(pointAfter);
                     }

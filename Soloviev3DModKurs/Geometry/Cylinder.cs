@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Soloviev3DModKurs.Geometry
 {
-    class Cylinder : BaseGeometry, IDrawable
+    class Cylinder : BaseGeometry, IDrawable, ICloneable
     {
         private double mHeightTrunc;
         private double mRadius;
 
-        public Cylinder(double mHeightTrunc, double radiusCyl, int n, double widthOffset, double heightOffset)
-            : base(n, widthOffset, heightOffset, -mHeightTrunc - mHeightTrunc)
+        public Cylinder(double mHeightTrunc, double radiusCyl, int n)
+            : base(n, -mHeightTrunc - mHeightTrunc)
         {
             this.mHeightTrunc = mHeightTrunc;
             this.mRadius = radiusCyl;
@@ -19,10 +19,19 @@ namespace Soloviev3DModKurs.Geometry
             buildGeometry();
         }
 
+        public Cylinder(double mHeightTrunc, double radiusCyl, int n, List<Face> faces)
+            : base(n, -mHeightTrunc - mHeightTrunc)
+        {
+            this.mHeightTrunc = mHeightTrunc;
+            this.mRadius = radiusCyl;
+
+            mFaces = faces;
+        }
+
         private void buildGeometry()
         {
             List<Point3D> pointsTop = new List<Point3D>(n);
-            List<Point3D> pointsBottom = GeometryUtils.approximationCircle(n, 0, mRadius, mWidthOffset, mHeightOffset);
+            List<Point3D> pointsBottom = GeometryUtils.approximationCircle(n, 0, mRadius);
 
             foreach (var item in pointsBottom)
             {
@@ -33,11 +42,11 @@ namespace Soloviev3DModKurs.Geometry
         }
 
 
-        public void draw(System.Drawing.Graphics graphics, System.Drawing.Pen pen)
+        public void draw(System.Drawing.Graphics graphics, System.Drawing.Pen pen, double Xoffset, double Yoffset, double Zoffset)
         {
             foreach (var item in base.mFaces)
             {
-                item.draw(graphics, pen);
+                item.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
             }
         }
 
@@ -54,6 +63,12 @@ namespace Soloviev3DModKurs.Geometry
             {
                 item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
             }
+        }
+
+
+        public object Clone()
+        {
+            return new Cylinder(mHeightTrunc, mRadius, n, (List<Face>)Extensions.Clone(mFaces));
         }
     }
 }

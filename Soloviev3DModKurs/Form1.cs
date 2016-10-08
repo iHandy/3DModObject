@@ -26,15 +26,18 @@ namespace Soloviev3DModKurs
         private Point mLocationEnd;
 
         private List<Cone> mCones = new List<Cone>();
+        private List<Cone> mConesProj = new List<Cone>();
 
         private Pen penFirst = new Pen(Color.Red);
         private Pen penOthers = new Pen(Color.Black);
 
         private Graphics mGraphics;
 
+        private bool isDrawApply = false;
+
         public Form1()
         {
-            InitializeComponent();    
+            InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -49,7 +52,7 @@ namespace Soloviev3DModKurs
             //mGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         }
 
-       
+
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -77,14 +80,14 @@ namespace Soloviev3DModKurs
 
             if (mCones != null && mCones.Count > 0)
             {
-                Cone newCone = getNextCone();
+                Cone newCone = getNextCone(false);
 
                 newCone.move(dx, dy, dz);
 
                 if (!checkBoxHoldObjects.Checked)
                 {
-                    mXoffset += dx;
-                    mYoffset += dy;
+                    /*mXoffset += dx;
+                    mYoffset += dy;*/
                 }
 
                 draw();
@@ -95,58 +98,107 @@ namespace Soloviev3DModKurs
             }
         }
 
-        private Cone getNextCone()
+        private void buttonTransferZ_Click(object sender, EventArgs e)
+        {
+            if (mCones != null && mCones.Count > 0)
+            {
+                Cone newCone = getNextCone(false);
+
+                double dx = Double.Parse(numericUpDownX.Value.ToString());
+                double dy = Double.Parse(numericUpDownY.Value.ToString());
+                double dz = Double.Parse(numericUpDownTransferZ.Value.ToString());
+
+                newCone.move(dx, dy, dz);
+
+                if (!checkBoxHoldObjects.Checked)
+                {
+                    //mZoffset += dz;
+                }
+
+                draw();
+            }
+            else
+            {
+                MessageBox.Show("For first create one cone!");
+            }
+        }
+
+        private Cone getNextCone(bool forProjection)
         {
             if (!checkBoxHoldObjects.Checked)
             {
                 if (mCones.Count > 0)
                 {
-                    return mCones[0];
+                    if (!forProjection)
+                    {
+                        return mCones[0];
+                    }
+                    else
+                    {
+                        mConesProj.Clear();
+                        mConesProj.Add((Cone)mCones[0].Clone());
+                        return mConesProj[0];
+                    }
                 }
                 else
                 {
-                    return getNewCone();
+                    return getNewCone(forProjection);
                 }
             }
             else
             {
-                return getNewCone();
+                return getNewCone(forProjection);
             }
         }
 
-        private Cone getNewCone()
+        private Cone getNewCone(bool forProjection)
         {
-            Cone newCone = new Cone((double)numericUpDown1.Value,
-            (double)numericUpDown2.Value,
-            (double)numericUpDown3.Value,
-            (double)numericUpDown5.Value,
-            (int)numericUpDown6.Value,
-            mWidthOffset,
-            mHeightOffset);
-            mCones.Add(newCone);
+            Cone newCone = new Cone((double)numericUpDown1.Value, (double)numericUpDown2.Value, (double)numericUpDown3.Value, (double)numericUpDown5.Value, (int)numericUpDown6.Value);
+            if (!forProjection)
+            {
+                mCones.Add(newCone);
+            }
+            else
+            {
+                mConesProj.Add(newCone);
+            }
             return newCone;
         }
 
         private void draw()
-        { 
+        {
+            if (checkBoxPerspChanges.Checked && !isDrawApply)
+            {
+                isDrawApply = true;
+                onPerspectiveProjection(Projection.PERSPECTIVE, Double.Parse(numericUpDownD.Value.ToString()));
+                return;
+            }
+            isDrawApply = false;
+
             mGraphics.Clear(BackColor);
 
-            int count = mCones.Count;
-            if (count > 0)
+            int countProj = mConesProj.Count;
+            if (countProj > 0)
             {
-                mCones[0].draw(mGraphics, penFirst);
+                mConesProj[0].draw(mGraphics, penOthers, mXoffset, mYoffset, mZoffset);
             }
-            if (count > 1)
+            else
             {
-                for (int i = 1; i < count; i++)
+                int count = mCones.Count;
+                if (count > 0)
                 {
-                    mCones[i].draw(mGraphics, penOthers);
+                    mCones[0].draw(mGraphics, penFirst, mXoffset, mYoffset, mZoffset);
+                }
+                if (count > 1)
+                {
+                    for (int i = 1; i < count; i++)
+                    {
+                        mCones[i].draw(mGraphics, penOthers, mXoffset, mYoffset, mZoffset);
+                    }
                 }
             }
 
-            
-
-            mGraphics.FillEllipse(Brushes.Blue, (int)mWidthOffset, (int)mHeightOffset, 2, 2);
+            mGraphics.FillEllipse(Brushes.Blue, (int)mWidthOffset - 1, (int)mHeightOffset - 1, 2, 2);
         }
 
         private void drawWithProjection(Projection projection)
@@ -166,12 +218,7 @@ namespace Soloviev3DModKurs
                 }
             }
 
-            mGraphics.FillEllipse(Brushes.Blue, (int)mWidthOffset-1, (int)mHeightOffset-1, 2, 2);
-        }
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-
+            mGraphics.FillEllipse(Brushes.Blue, (int)mWidthOffset - 1, (int)mHeightOffset - 1, 2, 2);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -185,11 +232,9 @@ namespace Soloviev3DModKurs
         {
             if (mCones != null && mCones.Count > 0)
             {
-                Cone newCone = getNextCone();
+                Cone newCone = getNextCone(false);
 
-                newCone.move(-mXoffset, -mYoffset, -mZoffset);
                 newCone.scale(sX, sY, sZ);
-                newCone.move(mXoffset, mYoffset, mZoffset);
 
                 draw();
             }
@@ -203,11 +248,9 @@ namespace Soloviev3DModKurs
         {
             if (mCones != null && mCones.Count > 0)
             {
-                Cone newCone = getNextCone();
+                Cone newCone = getNextCone(false);
 
-                newCone.move(-mXoffset, -mYoffset, 0/*-mZoffset*/);
                 newCone.rotate(angleX, angleY, angleZ);
-                newCone.move(mXoffset, mYoffset, 0/*mZoffset*/);
 
                 draw();
             }
@@ -221,13 +264,9 @@ namespace Soloviev3DModKurs
         {
             if (mCones != null && mCones.Count > 0)
             {
-                Cone newCone = getNextCone();
-
-                //newCone.move(-mXoffset, -mYoffset, -mZoffset);
+                Cone newCone = getNextCone(true);
 
                 newCone.projection(projection);
-
-                //newCone.move(mXoffset, mYoffset, mZoffset);
 
                 drawWithProjection(projection);
             }
@@ -241,7 +280,7 @@ namespace Soloviev3DModKurs
         {
             if (mCones != null && mCones.Count > 0)
             {
-                Cone newCone = getNextCone();
+                Cone newCone = getNextCone(true);
 
                 newCone.axonoProjection(projection, psi, fi);
 
@@ -257,10 +296,26 @@ namespace Soloviev3DModKurs
         {
             if (mCones != null && mCones.Count > 0)
             {
-                Cone newCone = getNextCone();
+                Cone newCone = getNextCone(true);
 
                 newCone.obliqueProjection(projection, p1, p2);
-                
+
+                draw();
+            }
+            else
+            {
+                MessageBox.Show("For first create one cone!");
+            }
+        }
+
+        private void onPerspectiveProjection(Projection projection, double d)
+        {
+            if (mCones != null && mCones.Count > 0)
+            {
+                Cone newCone = getNextCone(true);
+
+                newCone.perspectiveProjection(projection, d);
+
                 draw();
             }
             else
@@ -271,7 +326,7 @@ namespace Soloviev3DModKurs
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Cone newCone = getNextCone();
+            Cone newCone = getNextCone(false);
 
             draw();
         }
@@ -290,14 +345,17 @@ namespace Soloviev3DModKurs
         private void button4_Click(object sender, EventArgs e)
         {
             mCones.Clear();
+            mConesProj.Clear();
+            checkBoxPerspChanges.Checked = false;
             draw();
         }
 
         private void checkBoxHoldObjects_CheckedChanged(object sender, EventArgs e)
         {
             mCones.Clear();
+            mConesProj.Clear();
             draw();
-        }        
+        }
 
         private void buttonXup_Click(object sender, EventArgs e)
         {
@@ -318,7 +376,7 @@ namespace Soloviev3DModKurs
         {
             onRotate(0, -5, 0);
         }
-  
+
 
         private void buttonZleft_Click(object sender, EventArgs e)
         {
@@ -332,6 +390,12 @@ namespace Soloviev3DModKurs
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
+            mWidthOffset = (int)Width / 2;
+            mHeightOffset = (int)Height / 2;
+            mXoffset = mWidthOffset;
+            mYoffset = mHeightOffset;
+            mZoffset = mWidthOffset;
+
             mGraphics = CreateGraphics();
             mGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         }
@@ -343,8 +407,8 @@ namespace Soloviev3DModKurs
 
         private void buttonAxonometric_Click(object sender, EventArgs e)
         {
-            onAxonometricProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()), 
-                Double.Parse(numericUpDownPsi.Value.ToString()), 
+            onAxonometricProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
+                Double.Parse(numericUpDownPsi.Value.ToString()),
                 Double.Parse(numericUpDownFi.Value.ToString()));
         }
 
@@ -355,8 +419,18 @@ namespace Soloviev3DModKurs
                 Double.Parse(numericUpDownAlpha.Value.ToString()));
         }
 
-        
+        private void buttonPerspective_Click(object sender, EventArgs e)
+        {
+            onPerspectiveProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
+                Double.Parse(numericUpDownD.Value.ToString()));
+        }
 
-        
+
+
+
+
+
+
+
     }
 }
