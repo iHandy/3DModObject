@@ -79,10 +79,10 @@ namespace Soloviev3DModKurs.Geometry
             mCylinderInside.initRotate(angleX, angleY, angleZ);
         }
 
-        internal void projection(Projection projection)
+        internal void projection(Projection projection, params double[] projParams)
         {
-            initProjection(projection);
-            mCylinderInside.initProjection(projection);
+            initProjection(projection, projParams);
+            mCylinderInside.initProjection(projection, projParams);
         }
 
         public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
@@ -94,29 +94,25 @@ namespace Soloviev3DModKurs.Geometry
             mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
         }
 
-        internal void axonoProjection(Projection projection, double psi, double fi)
-        {
-            initAxonoProjection(projection, psi, fi);
-            mCylinderInside.initAxonoProjection(projection, psi, fi);
-        }
-
-        internal void obliqueProjection(Projection projection, double l, double alpha)
-        {
-            initObliqueProjection(projection, l, alpha);
-            mCylinderInside.initObliqueProjection(projection, l, alpha);
-        }
-
-        internal void perspectiveProjection(Projection projection, double d)
-        {
-            initPerspectiveProjection(projection, d);
-            mCylinderInside.initPerspectiveProjection(projection, d);
-        }
-
-
         public object Clone()
         {
             return new Cone(mHeightFull, mHeightTrunc, mRadiusMax, mRadiusMin, n, mCompensationY,
                 (Cylinder)mCylinderInside.Clone(), (List<Face>)Extensions.Clone(mFaces));
+        }
+
+        public double getSomeX()
+        {
+            return mFaces[0].getEdges()[0].getPoints()[0].X;
+        }
+
+        public double getSomeY()
+        {
+            return mFaces[0].getEdges()[0].getPoints()[0].Y;
+        }
+
+        public double getSomeZ()
+        {
+            return mFaces[0].getEdges()[0].getPoints()[0].Z;
         }
     }
 }

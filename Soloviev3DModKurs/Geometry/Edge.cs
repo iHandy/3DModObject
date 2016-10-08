@@ -8,14 +8,11 @@ namespace Soloviev3DModKurs.Geometry
 {
     class Edge : IDrawable, ICloneable
     {
-        public enum EdgeType { NONE, TOP, BOTTOM, VERTICAL }
+        public enum EdgeType { NONE, TOP_CONE, TOP_CYL, BOTTOM_CONE, BOTTOM_CYL, VERTICAL_CONE, VERTICAL_CYL }
 
         protected List<Point3D> mPoints;
 
         protected EdgeType mEdgeType { get; set; }
-
-        protected static Pen mTopPen = new Pen(Brushes.DarkCyan);
-        protected static Pen mBottomPen = new Pen(Brushes.YellowGreen);
 
         public Edge(float point1X, float point1Y, float point2X, float point2Y, EdgeType type)
         {
@@ -55,13 +52,17 @@ namespace Soloviev3DModKurs.Geometry
             {
                 case EdgeType.NONE:
                     break;
-                case EdgeType.TOP:
-                    pen = mTopPen;
+                case EdgeType.TOP_CONE:
+                    pen = Form1.mTopConePen;
                     break;
-                case EdgeType.BOTTOM:
-                    pen = mBottomPen;
+                case EdgeType.BOTTOM_CONE:
+                    pen = Form1.mBottomConePen;
                     break;
-                case EdgeType.VERTICAL:
+                case EdgeType.TOP_CYL:
+                    pen = Form1.mTopCylPen;
+                    break;
+                case EdgeType.BOTTOM_CYL:
+                    pen = Form1.mBottomCylPen;
                     break;
                 default:
                     break;
