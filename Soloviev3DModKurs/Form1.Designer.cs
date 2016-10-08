@@ -649,9 +649,9 @@
             this.labelBottomColorCone.AutoSize = true;
             this.labelBottomColorCone.Location = new System.Drawing.Point(6, 28);
             this.labelBottomColorCone.Name = "labelBottomColorCone";
-            this.labelBottomColorCone.Size = new System.Drawing.Size(94, 13);
+            this.labelBottomColorCone.Size = new System.Drawing.Size(93, 13);
             this.labelBottomColorCone.TabIndex = 2;
-            this.labelBottomColorCone.Text = "Bottom Cone color";
+            this.labelBottomColorCone.Text = "Bottom cone color";
             this.labelBottomColorCone.Click += new System.EventHandler(this.labelBottomColor_Click);
             // 
             // labelTopColorCone
@@ -691,7 +691,7 @@
             this.groupBox8.Controls.Add(this.label11);
             this.groupBox8.Location = new System.Drawing.Point(7, 235);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(189, 83);
+            this.groupBox8.Size = new System.Drawing.Size(189, 77);
             this.groupBox8.TabIndex = 25;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Perspective";
@@ -955,6 +955,8 @@
             this.pictureBox1.Size = new System.Drawing.Size(750, 594);
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             // 
             // Form1
             // 
@@ -972,7 +974,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.Form1_Layout);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
