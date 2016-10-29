@@ -27,6 +27,8 @@ namespace Soloviev3DModKurs.Geometry
             this.mCylinderInside = new Cylinder(mHeightTrunc, radiusCyl, n);
 
             buildGeometry();
+
+            initTopAndBottom();
         }
 
         public Cone(double heightFull, double heightTrunc, double radiusMax, double radiusMin, int n,
@@ -45,19 +47,78 @@ namespace Soloviev3DModKurs.Geometry
 
         private void buildGeometry()
         {
-            List<Point3D> pointsTop = GeometryUtils.approximationCircle(n, -mHeightTrunc, mRadiusMin);
-            List<Point3D> pointsBottom = GeometryUtils.approximationCircle(n, 0, mRadiusMax);
+            mPointsTop = GeometryUtils.approximationCircle(n, -mHeightTrunc, mRadiusMin);
+            mPointsBottom = GeometryUtils.approximationCircle(n, 0, mRadiusMax);
 
-            initFaces(pointsTop, pointsBottom);
+            initFaces();
+        }
+
+        private void initTopAndBottom()
+        {
+            Face topFace = new Face();
+            int a = 0;
+            Point3D prevPoint = null;
+            foreach (var topPoint in mPointsTop)
+            {
+                a++;
+                if (a % 2 == 0)
+                {
+                    topFace.addEdge(new Edge(prevPoint, topPoint, Edge.EdgeType.NONE));
+                }
+                prevPoint = topPoint;
+            }
+            topFace.addEdge(new Edge(prevPoint, mPointsTop[0], Edge.EdgeType.NONE));
+
+            a = 0;
+            foreach (var topPoint in mCylinderInside.mPointsTop)
+            {
+                a++;
+                if (a % 2 == 0)
+                {
+                    topFace.addEdge(new Edge(prevPoint, topPoint, Edge.EdgeType.NONE));
+                }
+                prevPoint = topPoint;
+            }
+            topFace.addEdge(new Edge(prevPoint, mCylinderInside.mPointsTop[0], Edge.EdgeType.NONE));
+            mFaces.Add(topFace);
+
+            mPointsBottom.Reverse();
+            Face bottomFace = new Face();
+            a = 0;
+            prevPoint = null;
+            foreach (var bottomPoint in mPointsBottom)
+            {
+                a++;
+                if (a % 2 == 0)
+                {
+                    bottomFace.addEdge(new Edge(prevPoint, bottomPoint, Edge.EdgeType.NONE));
+                }
+                prevPoint = bottomPoint;
+            }
+            bottomFace.addEdge(new Edge(prevPoint, mPointsBottom[0], Edge.EdgeType.NONE));
+
+            mCylinderInside.mPointsBottom.Reverse();
+            a = 0;
+            foreach (var bottomPoint in mCylinderInside.mPointsBottom)
+            {
+                a++;
+                if (a % 2 == 0)
+                {
+                    bottomFace.addEdge(new Edge(prevPoint, bottomPoint, Edge.EdgeType.NONE));
+                }
+                prevPoint = bottomPoint;
+            }
+            bottomFace.addEdge(new Edge(prevPoint, mCylinderInside.mPointsBottom[0], Edge.EdgeType.NONE));
+            mFaces.Add(bottomFace);
         }
 
         public void draw(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset)
         {
+            mCylinderInside.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
             foreach (var item in base.mFaces)
             {
                 item.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
             }
-            mCylinderInside.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
         }
 
 
@@ -87,11 +148,11 @@ namespace Soloviev3DModKurs.Geometry
 
         public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
         {
+            mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
             foreach (var item in base.mFaces)
             {
                 item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
             }
-            mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
         }
 
         public object Clone()
@@ -113,6 +174,60 @@ namespace Soloviev3DModKurs.Geometry
         public double getSomeZ()
         {
             return mFaces[0].getEdges()[0].getPoints()[0].Z;
+        }
+
+        internal String onClick(int x, int y)
+        {
+            Face targetFace = null;
+            foreach (var item in mFaces)
+            {
+                if (item.isVisible())
+                {
+                    if (IsInPolygon(item.points.ToArray(), new Point(x, y)))
+                    {
+                        targetFace = item;
+                        break;
+                    }
+                }
+            }
+            if (targetFace == null)
+            {
+                foreach (var item in mCylinderInside.mFaces)
+                {
+                    if (item.isVisible())
+                    {
+                        if (IsInPolygon(item.points.ToArray(), new Point(x, y)))
+                        {
+                            targetFace = item;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (targetFace != null)
+            {
+                return targetFace.getInfo();
+            }
+
+            return "Sorry, undefined.";
+        }
+
+        public static bool IsInPolygon(PointF[] poly, Point point)
+        {
+            var coef = poly.Skip(1).Select((p, i) =>
+                                            (point.Y - poly[i].Y) * (p.X - poly[i].X)
+                                          - (point.X - poly[i].X) * (p.Y - poly[i].Y))
+                                    .ToList();
+
+            if (coef.Any(p => p == 0))
+                return true;
+
+            for (int i = 1; i < coef.Count(); i++)
+            {
+                if (coef[i] * coef[i - 1] < 0)
+                    return false;
+            }
+            return true;
         }
     }
 }

@@ -30,15 +30,18 @@ namespace Soloviev3DModKurs.Geometry
 
         private void buildGeometry()
         {
-            List<Point3D> pointsTop = new List<Point3D>(n);
-            List<Point3D> pointsBottom = GeometryUtils.approximationCircle(n, 0, mRadius);
+            mPointsTop = new List<Point3D>(n);
+            mPointsBottom = GeometryUtils.approximationCircle(n, 0, mRadius);
 
-            foreach (var item in pointsBottom)
+            foreach (var item in mPointsBottom)
             {
-                pointsTop.Add(new Point3D(item.X, item.Y - mHeightTrunc, item.Z));
+                mPointsTop.Add(new Point3D(item.X, item.Y - mHeightTrunc, item.Z));
             }
 
-            initFaces(pointsTop, pointsBottom);
+            mPointsTop.Reverse();
+            mPointsBottom.Reverse();
+
+            initFaces();
         }
 
 

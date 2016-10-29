@@ -30,10 +30,14 @@ namespace Soloviev3DModKurs
 
         private Pen penFirst = new Pen(Color.Black);
 
+        public static Pen mMainColorPen = new Pen(Brushes.DarkViolet);
         public static Pen mTopConePen = new Pen(Brushes.DarkCyan);
         public static Pen mBottomConePen = new Pen(Brushes.YellowGreen);
         public static Pen mTopCylPen = new Pen(Brushes.LightSalmon);
         public static Pen mBottomCylPen = new Pen(Brushes.DarkBlue);
+
+        public static bool isVisibleEdges;
+        public static bool isColored;
 
         private bool isDrawApply = false;
 
@@ -290,13 +294,6 @@ namespace Soloviev3DModKurs
         private void Form1_Layout(object sender, LayoutEventArgs e)
         {
             info("Draw onLayout");
-            /*this.Controls.Add(pictureBox1);
-            this.Controls.Add(groupBox5);*/
-
-            //groupBox5.BringToFront();
-            //this.Invalidate();
-            //groupBox5.Dock = DockStyle.Left;
-            //this.pictureBox1.SendToBack();
 
             initFormToDraw();
 
@@ -363,7 +360,10 @@ namespace Soloviev3DModKurs
             mYoffset = mHeightOffset;
             mZoffset = mWidthOffset;
 
-            pictureBox1.Image = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+            if (pictureBox1 != null && pictureBox1.Size != null && pictureBox1.Size.Width != 0)
+            {
+                pictureBox1.Image = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+            }
 
             initLabelColors();
         }
@@ -402,6 +402,11 @@ namespace Soloviev3DModKurs
             labelBottomColorCone.ForeColor = mBottomConePen.Color;
             labelTopColorCyl.ForeColor = mTopCylPen.Color;
             labelBottomColorCyl.ForeColor = mBottomCylPen.Color;
+
+            isVisibleEdges = checkBoxVisibleEdges.Checked;
+            isColored = checkBoxColored.Checked;
+
+            draw(false);
         }
 
         private void labelTopColor_Click(object sender, EventArgs e)
@@ -444,5 +449,73 @@ namespace Soloviev3DModKurs
             initLabelColors();
         }
 
+        private void pictureBox1_Layout(object sender, LayoutEventArgs e)
+        {
+            initFormToDraw();
+
+            draw(false);
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Width = Width;
+            pictureBox1.Height = Height;
+            pictureBox1.Refresh();
+            this.Refresh();
+        }
+
+        private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Cone currentCone;
+            if (checkBoxProjChanges.Checked)
+            {
+                currentCone = mConesProj[mConesProj.Count - 1];
+            }
+            else
+            {
+                currentCone = mCones[mCones.Count - 1];
+            }
+
+            String message = currentCone.onClick(e.X, e.Y);
+            MessageBox.Show(message);
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+
+          
+        }
+
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            changeMainColor();
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+            changeMainColor();
+        }
+
+        private void changeMainColor()
+        {
+            DialogResult result = colorDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                mMainColorPen = new Pen(colorDialog1.Color);
+            }
+            panel1.BackColor = mMainColorPen.Color;
+            
+            initLabelColors();
+        }
+
+        private void checkBoxVisibleEdges_CheckedChanged(object sender, EventArgs e)
+        {
+            initLabelColors();
+        }
+
+        private void checkBoxColored_CheckedChanged(object sender, EventArgs e)
+        {
+            initLabelColors();
+        }
     }
 }

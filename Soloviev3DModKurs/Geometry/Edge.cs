@@ -48,6 +48,8 @@ namespace Soloviev3DModKurs.Geometry
 
         public void draw(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset)
         {
+            List<PointF> points = drawEdge(graphics, pen, Xoffset, Yoffset, Zoffset);
+
             switch (mEdgeType)
             {
                 case EdgeType.NONE:
@@ -67,9 +69,71 @@ namespace Soloviev3DModKurs.Geometry
                 default:
                     break;
             }
-            graphics.DrawLine(pen,
-                new PointF(doubleToFloat(mPoints[0].X + Xoffset), doubleToFloat(mPoints[0].Y + Yoffset)),
-                new PointF(doubleToFloat(mPoints[1].X + Xoffset), doubleToFloat(mPoints[1].Y + Yoffset)));
+
+            graphics.DrawLines(pen, points.ToArray());
+        }
+
+        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        {
+            List<PointF> points = drawProjectionEdge(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
+
+            switch (mEdgeType)
+            {
+                case EdgeType.NONE:
+                    break;
+                case EdgeType.TOP_CONE:
+                    pen = Form1.mTopConePen;
+                    break;
+                case EdgeType.BOTTOM_CONE:
+                    pen = Form1.mBottomConePen;
+                    break;
+                case EdgeType.TOP_CYL:
+                    pen = Form1.mTopCylPen;
+                    break;
+                case EdgeType.BOTTOM_CYL:
+                    pen = Form1.mBottomCylPen;
+                    break;
+                default:
+                    break;
+            }
+            graphics.DrawLines(pen, points.ToArray());
+        }
+
+        public List<PointF> drawEdge(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset)
+        {  
+            List<PointF> points = new List<PointF>(2);
+            points.Add(new PointF(doubleToFloat(mPoints[0].X + Xoffset), doubleToFloat(mPoints[0].Y + Yoffset)));
+            points.Add(new PointF(doubleToFloat(mPoints[1].X + Xoffset), doubleToFloat(mPoints[1].Y + Yoffset)));
+            return points;
+        }   
+
+        public List<PointF> drawProjectionEdge(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        {
+            List<PointF> points = new List<PointF>(2);
+            switch (projection)
+            {
+                case Projection.FRONT:
+                    points.Add(new PointF((float)(mPoints[0].X + Xoffset), (float)(mPoints[0].Y + Yoffset)));
+                    points.Add(new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Y + Yoffset)));
+                    break;
+                case Projection.PROFILE:
+                    points.Add(new PointF((float)(mPoints[0].Z + Zoffset), (float)(mPoints[0].Y + Yoffset)));
+                    points.Add(new PointF((float)(mPoints[1].Z + Zoffset), (float)(mPoints[1].Y + Yoffset)));
+                    break;
+                case Projection.HORIZONTAL:
+                    points.Add(new PointF((float)(mPoints[0].X + Xoffset), (float)(mPoints[0].Z + Yoffset)));
+                    points.Add(new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Z + Yoffset)));
+                    break;
+                default:
+                    break;
+            }
+            return points;
+        }
+
+        public object Clone()
+        {
+            List<Point3D> points = (List<Point3D>)Extensions.Clone(mPoints);
+            return new Edge(points, mEdgeType);
         }
 
         public float doubleToFloat(double input)
@@ -84,39 +148,6 @@ namespace Soloviev3DModKurs.Geometry
                 result = -500000000;
             }
             return result;
-        }
-
-
-        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
-        {
-            switch (projection)
-            {
-                case Projection.FRONT:
-                    graphics.DrawLine(pen,
-               new PointF((float)(mPoints[0].X + Xoffset), (float)(mPoints[0].Y + Yoffset)),
-               new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Y + Yoffset)));
-                    break;
-                case Projection.PROFILE:
-                    graphics.DrawLine(pen,
-               new PointF((float)(mPoints[0].Z + Zoffset), (float)(mPoints[0].Y + Yoffset)),
-               new PointF((float)(mPoints[1].Z + Zoffset), (float)(mPoints[1].Y + Yoffset)));
-                    break;
-                case Projection.HORIZONTAL:
-                    graphics.DrawLine(pen,
-               new PointF((float)(mPoints[0].X + Xoffset), (float)(mPoints[0].Z + Yoffset)),
-               new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Z + Yoffset)));
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-
-        public object Clone()
-        {
-            List<Point3D> points = (List<Point3D>)Extensions.Clone(mPoints);
-            return new Edge(points, mEdgeType);
         }
     }
 }

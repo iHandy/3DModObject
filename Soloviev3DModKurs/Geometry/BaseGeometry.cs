@@ -10,7 +10,10 @@ namespace Soloviev3DModKurs.Geometry
     {
         protected int n;
 
-        protected List<Face> mFaces;
+        public List<Face> mFaces;
+
+        public List<Point3D> mPointsTop;
+        public List<Point3D> mPointsBottom;
 
         protected double mCompensationY;
 
@@ -21,20 +24,20 @@ namespace Soloviev3DModKurs.Geometry
             mFaces = new List<Face>(n);
         }
 
-        protected void initFaces(List<Point3D> pointsTop, List<Point3D> pointsBottom)
+        protected void initFaces()
         {
             bool isCone = this is Cone;
             for (int i = 0; i < n; i++)
             {
                 Face oneFace = new Face();
-                for (int j = 0; j < 4; j++)
-                {
+                /*for (int j = 0; j < 4; j++)
+                {*/
                     int secondElt = i < (n - 1) ? i + 1 : 0;
-                    oneFace.addEdge(new Edge(pointsTop[i], pointsBottom[i], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
-                    oneFace.addEdge(new Edge(pointsBottom[i], pointsBottom[secondElt], isCone ? Edge.EdgeType.BOTTOM_CONE : Edge.EdgeType.BOTTOM_CYL));
-                    oneFace.addEdge(new Edge(pointsBottom[secondElt], pointsTop[secondElt], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
-                    oneFace.addEdge(new Edge(pointsTop[secondElt], pointsTop[i], isCone ? Edge.EdgeType.TOP_CONE : Edge.EdgeType.TOP_CYL));
-                }
+                    oneFace.addEdge(new Edge(mPointsTop[i], mPointsBottom[i], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
+                    oneFace.addEdge(new Edge(mPointsBottom[i], mPointsBottom[secondElt], isCone ? Edge.EdgeType.BOTTOM_CONE : Edge.EdgeType.BOTTOM_CYL));
+                    oneFace.addEdge(new Edge(mPointsBottom[secondElt], mPointsTop[secondElt], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
+                    oneFace.addEdge(new Edge(mPointsTop[secondElt], mPointsTop[i], isCone ? Edge.EdgeType.TOP_CONE : Edge.EdgeType.TOP_CYL));
+                /*}*/
                 mFaces.Add(oneFace);
             }
         }
@@ -248,11 +251,11 @@ namespace Soloviev3DModKurs.Geometry
                     foreach (var itemPoint in pointsBefore)
                     {
                         double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
-                        double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+                        double[] after = GeometryUtils.matrixMultiplication(before, viewMatrix != null ? viewMatrix : projectionMatrix);
                         if (viewMatrix != null)
                         {
                             before = (double[])after.Clone();
-                            after = GeometryUtils.matrixMultiplication(before, viewMatrix);
+                            after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
                         }
                         Point3D pointAfter;
                         double p4 = after[3];

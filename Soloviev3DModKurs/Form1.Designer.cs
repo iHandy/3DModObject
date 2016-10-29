@@ -63,6 +63,13 @@
             this.buttonYright = new System.Windows.Forms.Button();
             this.buttonYleft = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownRo = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.numericUpDownFi2 = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.numericUpDownTheta = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.labelBottomColorCyl = new System.Windows.Forms.Label();
             this.labelTopColorCyl = new System.Windows.Forms.Label();
@@ -91,13 +98,11 @@
             this.buttonFront = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.numericUpDownFi2 = new System.Windows.Forms.NumericUpDown();
-            this.label15 = new System.Windows.Forms.Label();
-            this.numericUpDownTheta = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
-            this.numericUpDownRo = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.checkBoxVisibleEdges = new System.Windows.Forms.CheckBox();
+            this.checkBoxColored = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -111,6 +116,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTransferZ)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).BeginInit();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).BeginInit();
@@ -121,10 +130,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).BeginInit();
+            this.groupBox11.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -608,19 +615,117 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.groupBox10);
             this.groupBox5.Controls.Add(this.groupBox9);
             this.groupBox5.Controls.Add(this.checkBoxProjChanges);
             this.groupBox5.Controls.Add(this.groupBox8);
             this.groupBox5.Controls.Add(this.groupBox7);
             this.groupBox5.Controls.Add(this.groupBox6);
-            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox5.Location = new System.Drawing.Point(548, 0);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(202, 594);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Projections";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.numericUpDownRo);
+            this.groupBox10.Controls.Add(this.label17);
+            this.groupBox10.Controls.Add(this.numericUpDownFi2);
+            this.groupBox10.Controls.Add(this.label15);
+            this.groupBox10.Controls.Add(this.numericUpDownTheta);
+            this.groupBox10.Controls.Add(this.label16);
+            this.groupBox10.Location = new System.Drawing.Point(7, 285);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(189, 77);
+            this.groupBox10.TabIndex = 25;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Showing";
+            // 
+            // numericUpDownRo
+            // 
+            this.numericUpDownRo.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownRo.Location = new System.Drawing.Point(122, 31);
+            this.numericUpDownRo.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDownRo.Minimum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownRo.Name = "numericUpDownRo";
+            this.numericUpDownRo.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownRo.TabIndex = 26;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(97, 34);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(25, 13);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "ρ = ";
+            // 
+            // numericUpDownFi2
+            // 
+            this.numericUpDownFi2.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownFi2.Location = new System.Drawing.Point(41, 42);
+            this.numericUpDownFi2.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numericUpDownFi2.Name = "numericUpDownFi2";
+            this.numericUpDownFi2.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDownFi2.TabIndex = 23;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(14, 44);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(27, 13);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "φ = ";
+            // 
+            // numericUpDownTheta
+            // 
+            this.numericUpDownTheta.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownTheta.Location = new System.Drawing.Point(41, 16);
+            this.numericUpDownTheta.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numericUpDownTheta.Name = "numericUpDownTheta";
+            this.numericUpDownTheta.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDownTheta.TabIndex = 21;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(14, 19);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(25, 13);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "θ = ";
             // 
             // groupBox9
             // 
@@ -961,128 +1066,96 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(750, 594);
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Layout += new System.Windows.Forms.LayoutEventHandler(this.pictureBox1_Layout);
+            this.pictureBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDoubleClick);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             // 
-            // groupBox10
+            // groupBox11
             // 
-            this.groupBox10.Controls.Add(this.numericUpDownRo);
-            this.groupBox10.Controls.Add(this.label17);
-            this.groupBox10.Controls.Add(this.numericUpDownFi2);
-            this.groupBox10.Controls.Add(this.label15);
-            this.groupBox10.Controls.Add(this.numericUpDownTheta);
-            this.groupBox10.Controls.Add(this.label16);
-            this.groupBox10.Location = new System.Drawing.Point(7, 285);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(189, 77);
-            this.groupBox10.TabIndex = 25;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Showing";
+            this.groupBox11.Controls.Add(this.panel1);
+            this.groupBox11.Controls.Add(this.checkBoxColored);
+            this.groupBox11.Controls.Add(this.checkBoxVisibleEdges);
+            this.groupBox11.Location = new System.Drawing.Point(3, 466);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(182, 100);
+            this.groupBox11.TabIndex = 6;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Color, invisible lines";
             // 
-            // numericUpDownFi2
+            // checkBoxVisibleEdges
             // 
-            this.numericUpDownFi2.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDownFi2.Location = new System.Drawing.Point(41, 42);
-            this.numericUpDownFi2.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.numericUpDownFi2.Name = "numericUpDownFi2";
-            this.numericUpDownFi2.Size = new System.Drawing.Size(38, 20);
-            this.numericUpDownFi2.TabIndex = 23;
+            this.checkBoxVisibleEdges.AutoSize = true;
+            this.checkBoxVisibleEdges.Checked = true;
+            this.checkBoxVisibleEdges.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxVisibleEdges.Location = new System.Drawing.Point(11, 20);
+            this.checkBoxVisibleEdges.Name = "checkBoxVisibleEdges";
+            this.checkBoxVisibleEdges.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxVisibleEdges.TabIndex = 0;
+            this.checkBoxVisibleEdges.Text = "visible edges";
+            this.checkBoxVisibleEdges.UseVisualStyleBackColor = true;
+            this.checkBoxVisibleEdges.CheckedChanged += new System.EventHandler(this.checkBoxVisibleEdges_CheckedChanged);
             // 
-            // label15
+            // checkBoxColored
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(14, 44);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(27, 13);
-            this.label15.TabIndex = 22;
-            this.label15.Text = "φ = ";
+            this.checkBoxColored.AutoSize = true;
+            this.checkBoxColored.Location = new System.Drawing.Point(11, 43);
+            this.checkBoxColored.Name = "checkBoxColored";
+            this.checkBoxColored.Size = new System.Drawing.Size(61, 17);
+            this.checkBoxColored.TabIndex = 1;
+            this.checkBoxColored.Text = "colored";
+            this.checkBoxColored.UseVisualStyleBackColor = true;
+            this.checkBoxColored.CheckedChanged += new System.EventHandler(this.checkBoxColored_CheckedChanged);
             // 
-            // numericUpDownTheta
+            // panel1
             // 
-            this.numericUpDownTheta.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDownTheta.Location = new System.Drawing.Point(41, 16);
-            this.numericUpDownTheta.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.numericUpDownTheta.Name = "numericUpDownTheta";
-            this.numericUpDownTheta.Size = new System.Drawing.Size(38, 20);
-            this.numericUpDownTheta.TabIndex = 21;
+            this.panel1.BackColor = System.Drawing.Color.DarkViolet;
+            this.panel1.Controls.Add(this.label18);
+            this.panel1.Location = new System.Drawing.Point(78, 43);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(97, 17);
+            this.panel1.TabIndex = 2;
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
-            // label16
+            // label18
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(14, 19);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(25, 13);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "θ = ";
-            // 
-            // numericUpDownRo
-            // 
-            this.numericUpDownRo.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDownRo.Location = new System.Drawing.Point(122, 31);
-            this.numericUpDownRo.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.numericUpDownRo.Minimum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDownRo.Name = "numericUpDownRo";
-            this.numericUpDownRo.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownRo.TabIndex = 26;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(97, 34);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(25, 13);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "ρ = ";
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(9, 1);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(80, 13);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "click to change";
+            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(750, 594);
+            this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
+            this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.Form1_Layout);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.groupBox1.ResumeLayout(false);
@@ -1101,6 +1174,11 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.groupBox8.ResumeLayout(false);
@@ -1115,11 +1193,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).EndInit();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1196,6 +1273,11 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.NumericUpDown numericUpDownTheta;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.CheckBox checkBoxColored;
+        private System.Windows.Forms.CheckBox checkBoxVisibleEdges;
     }
 }
 
