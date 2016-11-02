@@ -112,12 +112,12 @@ namespace Soloviev3DModKurs.Geometry
             mFaces.Add(bottomFace);
         }
 
-        public void draw(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset)
+        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
         {
-            mCylinderInside.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
+            mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
             foreach (var item in base.mFaces)
             {
-                item.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
+                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
             }
         }
 
@@ -144,15 +144,6 @@ namespace Soloviev3DModKurs.Geometry
         {
             initProjection(projection, projParams);
             mCylinderInside.initProjection(projection, projParams);
-        }
-
-        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
-        {
-            mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
-            foreach (var item in base.mFaces)
-            {
-                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
-            }
         }
 
         public object Clone()

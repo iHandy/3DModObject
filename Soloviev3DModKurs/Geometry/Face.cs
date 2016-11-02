@@ -9,10 +9,9 @@ namespace Soloviev3DModKurs.Geometry
     class Face : IDrawable, ICloneable
     {
         protected List<Edge> mEdges;
-        Random rand = new Random();
+        public bool isCone = true;
 
         public List<PointF> points = new List<PointF>(4);
-
         public double cosVW { get; set; }
 
         public Face()
@@ -20,9 +19,10 @@ namespace Soloviev3DModKurs.Geometry
             mEdges = new List<Edge>();
         }
 
-        public Face(List<Edge> listOfEdges)
+        public Face(List<Edge> listOfEdges, bool isCone)
         {
             mEdges = listOfEdges;
+            this.isCone = isCone;
         }
 
         public void addEdge(Edge edge)
@@ -35,28 +35,9 @@ namespace Soloviev3DModKurs.Geometry
             return mEdges;
         }
 
-        public void draw(System.Drawing.Graphics graphics, System.Drawing.Pen pen, double Xoffset, double Yoffset, double Zoffset)
+        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
         {
-            GeometryUtils.CalculatingEquation(this, Xoffset, Yoffset, Zoffset - 3000);
-
-            points = new List<PointF>(8);
-            foreach (Edge oneEdge in mEdges)
-            {
-                points.AddRange(oneEdge.drawEdge(graphics, pen, Xoffset, Yoffset, Zoffset));
-                if (Form1.isVisibleEdges && ((isVisible() && Form1.isColored) || !Form1.isColored))
-                {
-                    oneEdge.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
-                }
-                if (Form1.isColored && isVisible())
-                {
-                    graphics.FillPolygon(Form1.mMainColorPen.Brush, points.ToArray());
-                }
-            }
-        }
-
-        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
-        {
-            GeometryUtils.CalculatingEquation(this, Xoffset, Yoffset, Zoffset - 3000);
+            GeometryUtils.CalculatingEquation(this, viewPoint);
 
             points = new List<PointF>(8);
             foreach (Edge oneEdge in mEdges)
@@ -64,12 +45,12 @@ namespace Soloviev3DModKurs.Geometry
                 points.AddRange(oneEdge.drawProjectionEdge(graphics, pen, projection, Xoffset, Yoffset, Zoffset));
                 if (Form1.isVisibleEdges && ((isVisible() && Form1.isColored) || !Form1.isColored))
                 {
-                    oneEdge.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
+                    oneEdge.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
                 }
             }
             if (Form1.isColored && isVisible())
             {
-                graphics.FillPolygon(Form1.mMainColorPen.Brush, points.ToArray());
+                graphics.FillPolygon(isCone ? Form1.mMainColorPen.Brush : Form1.mCylColorPen.Brush, points.ToArray());
             }
         }
 
@@ -77,7 +58,7 @@ namespace Soloviev3DModKurs.Geometry
         public object Clone()
         {
             List<Edge> edges = (List<Edge>)Extensions.Clone(getEdges());
-            return new Face(edges);
+            return new Face(edges, isCone);
         }
 
         public bool isVisible()

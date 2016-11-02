@@ -57,9 +57,9 @@ namespace Soloviev3DModKurs.Geometry
             public double C = 0;
         }
 
-        public static void CalculatingEquation(Face face, double lX, double lY, double lZ)
+        public static void CalculatingEquation(Face face, Point3D viewPoint)
         {
-            double LX = lX, LY = lY, LZ = lZ; //источник света
+            double LX = viewPoint.X, LY = viewPoint.Y, LZ = viewPoint.Z; //источник света
 
             /*foreach (var face in faces)
             {*/

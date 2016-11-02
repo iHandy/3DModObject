@@ -99,10 +99,12 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.checkBoxVisibleEdges = new System.Windows.Forms.CheckBox();
-            this.checkBoxColored = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
+            this.checkBoxColored = new System.Windows.Forms.CheckBox();
+            this.checkBoxVisibleEdges = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -132,6 +134,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox11.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -794,6 +797,9 @@
             // checkBoxProjChanges
             // 
             this.checkBoxProjChanges.AutoSize = true;
+            this.checkBoxProjChanges.Checked = true;
+            this.checkBoxProjChanges.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxProjChanges.Enabled = false;
             this.checkBoxProjChanges.Location = new System.Drawing.Point(33, 262);
             this.checkBoxProjChanges.Name = "checkBoxProjChanges";
             this.checkBoxProjChanges.Size = new System.Drawing.Size(131, 17);
@@ -1084,6 +1090,7 @@
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.panel2);
             this.groupBox11.Controls.Add(this.panel1);
             this.groupBox11.Controls.Add(this.checkBoxColored);
             this.groupBox11.Controls.Add(this.checkBoxVisibleEdges);
@@ -1093,30 +1100,6 @@
             this.groupBox11.TabIndex = 6;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Color, invisible lines";
-            // 
-            // checkBoxVisibleEdges
-            // 
-            this.checkBoxVisibleEdges.AutoSize = true;
-            this.checkBoxVisibleEdges.Checked = true;
-            this.checkBoxVisibleEdges.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxVisibleEdges.Location = new System.Drawing.Point(11, 20);
-            this.checkBoxVisibleEdges.Name = "checkBoxVisibleEdges";
-            this.checkBoxVisibleEdges.Size = new System.Drawing.Size(87, 17);
-            this.checkBoxVisibleEdges.TabIndex = 0;
-            this.checkBoxVisibleEdges.Text = "visible edges";
-            this.checkBoxVisibleEdges.UseVisualStyleBackColor = true;
-            this.checkBoxVisibleEdges.CheckedChanged += new System.EventHandler(this.checkBoxVisibleEdges_CheckedChanged);
-            // 
-            // checkBoxColored
-            // 
-            this.checkBoxColored.AutoSize = true;
-            this.checkBoxColored.Location = new System.Drawing.Point(11, 43);
-            this.checkBoxColored.Name = "checkBoxColored";
-            this.checkBoxColored.Size = new System.Drawing.Size(61, 17);
-            this.checkBoxColored.TabIndex = 1;
-            this.checkBoxColored.Text = "colored";
-            this.checkBoxColored.UseVisualStyleBackColor = true;
-            this.checkBoxColored.CheckedChanged += new System.EventHandler(this.checkBoxColored_CheckedChanged);
             // 
             // panel1
             // 
@@ -1137,6 +1120,50 @@
             this.label18.TabIndex = 0;
             this.label18.Text = "click to change";
             this.label18.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // checkBoxColored
+            // 
+            this.checkBoxColored.AutoSize = true;
+            this.checkBoxColored.Location = new System.Drawing.Point(11, 43);
+            this.checkBoxColored.Name = "checkBoxColored";
+            this.checkBoxColored.Size = new System.Drawing.Size(61, 17);
+            this.checkBoxColored.TabIndex = 1;
+            this.checkBoxColored.Text = "colored";
+            this.checkBoxColored.UseVisualStyleBackColor = true;
+            this.checkBoxColored.CheckedChanged += new System.EventHandler(this.checkBoxColored_CheckedChanged);
+            // 
+            // checkBoxVisibleEdges
+            // 
+            this.checkBoxVisibleEdges.AutoSize = true;
+            this.checkBoxVisibleEdges.Checked = true;
+            this.checkBoxVisibleEdges.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxVisibleEdges.Location = new System.Drawing.Point(11, 20);
+            this.checkBoxVisibleEdges.Name = "checkBoxVisibleEdges";
+            this.checkBoxVisibleEdges.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxVisibleEdges.TabIndex = 0;
+            this.checkBoxVisibleEdges.Text = "visible edges";
+            this.checkBoxVisibleEdges.UseVisualStyleBackColor = true;
+            this.checkBoxVisibleEdges.CheckedChanged += new System.EventHandler(this.checkBoxVisibleEdges_CheckedChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.MediumBlue;
+            this.panel2.Controls.Add(this.label19);
+            this.panel2.Location = new System.Drawing.Point(78, 66);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(97, 17);
+            this.panel2.TabIndex = 3;
+            this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(9, 1);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(80, 13);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "click to change";
+            this.label19.Click += new System.EventHandler(this.label19_Click);
             // 
             // Form1
             // 
@@ -1197,6 +1224,8 @@
             this.groupBox11.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1278,6 +1307,8 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox checkBoxColored;
         private System.Windows.Forms.CheckBox checkBoxVisibleEdges;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label19;
     }
 }
 

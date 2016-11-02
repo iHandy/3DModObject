@@ -30,6 +30,7 @@ namespace Soloviev3DModKurs.Geometry
             for (int i = 0; i < n; i++)
             {
                 Face oneFace = new Face();
+                oneFace.isCone = isCone;
                 /*for (int j = 0; j < 4; j++)
                 {*/
                     int secondElt = i < (n - 1) ? i + 1 : 0;

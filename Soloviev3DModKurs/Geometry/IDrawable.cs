@@ -9,8 +9,6 @@ namespace Soloviev3DModKurs.Geometry
 {
     public interface IDrawable
     {
-        void draw(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset);
-
-        void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset);
+        void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint);
     }
 }

@@ -31,6 +31,7 @@ namespace Soloviev3DModKurs
         private Pen penFirst = new Pen(Color.Black);
 
         public static Pen mMainColorPen = new Pen(Brushes.DarkViolet);
+        public static Pen mCylColorPen = new Pen(Brushes.MediumBlue);
         public static Pen mTopConePen = new Pen(Brushes.DarkCyan);
         public static Pen mBottomConePen = new Pen(Brushes.YellowGreen);
         public static Pen mTopCylPen = new Pen(Brushes.LightSalmon);
@@ -163,47 +164,23 @@ namespace Soloviev3DModKurs
             int countProj = mConesProj.Count;
             if (countProj > 0)
             {
-                if (withProjection)
-                {
-                    info("Draw (with projection): projection");
-                    mConesProj[0].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset);
-                }
-                else
-                {
-                    info("Draw: projection");
-                    mConesProj[0].draw(graphics, penFirst, mXoffset, mYoffset, mZoffset);
-                }
+                info("Draw (with projection): projection");
+                mConesProj[0].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset, getViewPoint());
             }
             else
             {
                 int count = mCones.Count;
                 if (count > 0)
                 {
-                    if (withProjection)
-                    {
-                        info("Draw (with projection)");
-                        mCones[0].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset);
-                    }
-                    else
-                    {
-                        info("Draw");
-                        mCones[0].draw(graphics, penFirst, mXoffset, mYoffset, mZoffset);
-                    }
+                    info("Draw (with projection)");
+                    mCones[0].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset, getViewPoint());
                 }
                 if (count > 1)
                 {
                     for (int i = 1; i < count; i++)
                     {
-                        if (withProjection)
-                        {
-                            info("Draw (with projection)");
-                            mCones[i].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset);
-                        }
-                        else
-                        {
-                            info("Draw");
-                            mCones[i].draw(graphics, penFirst, mXoffset, mYoffset, mZoffset);
-                        }
+                        info("Draw (with projection)");
+                        mCones[i].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset, getViewPoint());
                     }
                 }
             }
@@ -221,6 +198,15 @@ namespace Soloviev3DModKurs
 
             pictureBox1.Image = drawArea;
             graphics.Dispose();
+        }
+
+        private Point3D getViewPoint()
+        {
+            double theta = Double.Parse(numericUpDownTheta.Value.ToString()) * Math.PI / 180;
+            double fi = Double.Parse(numericUpDownFi2.Value.ToString()) * Math.PI / 180;
+            double ro = Double.Parse(numericUpDownRo.Value.ToString()) * Math.PI / 180;
+
+            return new Point3D(ro * Math.Sin(theta) * Math.Cos(fi) + mXoffset, ro * Math.Sin(theta) * Math.Sin(fi) + mYoffset, ro * Math.Cos(fi) + mZoffset);
         }
 
         private void info(string text)
@@ -288,7 +274,7 @@ namespace Soloviev3DModKurs
         {
             Cone newCone = getNextCone(false);
 
-            draw(false);
+            onProjection(Projection.FRONT);
         }
 
         private void Form1_Layout(object sender, LayoutEventArgs e)
@@ -297,7 +283,10 @@ namespace Soloviev3DModKurs
 
             initFormToDraw();
 
-            draw(false);
+            if ((mCones != null && mCones.Count > 0) || (mConesProj != null && mConesProj.Count > 0))
+            {
+                draw(false);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -310,7 +299,7 @@ namespace Soloviev3DModKurs
         {
             mCones.Clear();
             mConesProj.Clear();
-            checkBoxProjChanges.Checked = false;
+            checkBoxProjChanges.Checked = true;
             mLastProjectionParams = null;
             isDrawApply = false;
 
@@ -318,7 +307,11 @@ namespace Soloviev3DModKurs
             mYoffset = mHeightOffset;
             mZoffset = mWidthOffset;
 
-            draw(false);
+            Image drawArea = pictureBox1.Image;
+            Graphics graphics = Graphics.FromImage(drawArea);
+            graphics.Clear(BackColor);
+            pictureBox1.Image = drawArea;
+            graphics.Dispose();
         }
 
         private void buttonXup_Click(object sender, EventArgs e)
@@ -406,7 +399,10 @@ namespace Soloviev3DModKurs
             isVisibleEdges = checkBoxVisibleEdges.Checked;
             isColored = checkBoxColored.Checked;
 
-            draw(false);
+            if ((mCones != null && mCones.Count > 0) || (mConesProj != null && mConesProj.Count > 0))
+            {
+                draw(false);
+            }
         }
 
         private void labelTopColor_Click(object sender, EventArgs e)
@@ -466,7 +462,7 @@ namespace Soloviev3DModKurs
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Cone currentCone;
+            /*Cone currentCone;
             if (checkBoxProjChanges.Checked)
             {
                 currentCone = mConesProj[mConesProj.Count - 1];
@@ -477,13 +473,13 @@ namespace Soloviev3DModKurs
             }
 
             String message = currentCone.onClick(e.X, e.Y);
-            MessageBox.Show(message);
+            MessageBox.Show(message);*/
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
 
-          
+
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -504,7 +500,19 @@ namespace Soloviev3DModKurs
                 mMainColorPen = new Pen(colorDialog1.Color);
             }
             panel1.BackColor = mMainColorPen.Color;
-            
+
+            initLabelColors();
+        }
+
+        private void changeCylColor()
+        {
+            DialogResult result = colorDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                mCylColorPen = new Pen(colorDialog1.Color);
+            }
+            panel2.BackColor = mCylColorPen.Color;
+
             initLabelColors();
         }
 
@@ -516,6 +524,16 @@ namespace Soloviev3DModKurs
         private void checkBoxColored_CheckedChanged(object sender, EventArgs e)
         {
             initLabelColors();
+        }
+
+        private void panel2_MouseClick(object sender, MouseEventArgs e)
+        {
+            changeCylColor();
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+            changeCylColor();
         }
     }
 }

@@ -46,34 +46,7 @@ namespace Soloviev3DModKurs.Geometry
             mPoints = newPoints;
         }
 
-        public void draw(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset)
-        {
-            List<PointF> points = drawEdge(graphics, pen, Xoffset, Yoffset, Zoffset);
-
-            switch (mEdgeType)
-            {
-                case EdgeType.NONE:
-                    break;
-                case EdgeType.TOP_CONE:
-                    pen = Form1.mTopConePen;
-                    break;
-                case EdgeType.BOTTOM_CONE:
-                    pen = Form1.mBottomConePen;
-                    break;
-                case EdgeType.TOP_CYL:
-                    pen = Form1.mTopCylPen;
-                    break;
-                case EdgeType.BOTTOM_CYL:
-                    pen = Form1.mBottomCylPen;
-                    break;
-                default:
-                    break;
-            }
-
-            graphics.DrawLines(pen, points.ToArray());
-        }
-
-        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
         {
             List<PointF> points = drawProjectionEdge(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
 
@@ -97,15 +70,7 @@ namespace Soloviev3DModKurs.Geometry
                     break;
             }
             graphics.DrawLines(pen, points.ToArray());
-        }
-
-        public List<PointF> drawEdge(Graphics graphics, Pen pen, double Xoffset, double Yoffset, double Zoffset)
-        {  
-            List<PointF> points = new List<PointF>(2);
-            points.Add(new PointF(doubleToFloat(mPoints[0].X + Xoffset), doubleToFloat(mPoints[0].Y + Yoffset)));
-            points.Add(new PointF(doubleToFloat(mPoints[1].X + Xoffset), doubleToFloat(mPoints[1].Y + Yoffset)));
-            return points;
-        }   
+        }  
 
         public List<PointF> drawProjectionEdge(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
         {
@@ -125,6 +90,8 @@ namespace Soloviev3DModKurs.Geometry
                     points.Add(new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Z + Yoffset)));
                     break;
                 default:
+                    points.Add(new PointF(doubleToFloat(mPoints[0].X + Xoffset), doubleToFloat(mPoints[0].Y + Yoffset)));
+                    points.Add(new PointF(doubleToFloat(mPoints[1].X + Xoffset), doubleToFloat(mPoints[1].Y + Yoffset)));
                     break;
             }
             return points;

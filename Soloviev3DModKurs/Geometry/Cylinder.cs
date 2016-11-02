@@ -44,27 +44,17 @@ namespace Soloviev3DModKurs.Geometry
             initFaces();
         }
 
-
-        public void draw(System.Drawing.Graphics graphics, System.Drawing.Pen pen, double Xoffset, double Yoffset, double Zoffset)
-        {
-            foreach (var item in base.mFaces)
-            {
-                item.draw(graphics, pen, Xoffset, Yoffset, Zoffset);
-            }
-        }
-
-
         public void move(int dx, int dy, int dz)
         {
             initMove(dx, dy, dz);
         }
 
 
-        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
         {
             foreach (var item in base.mFaces)
             {
-                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
+                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
             }
         }
 
