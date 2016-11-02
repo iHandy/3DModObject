@@ -46,52 +46,53 @@ namespace Soloviev3DModKurs.Geometry
             mPoints = newPoints;
         }
 
-        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
+        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
         {
-            List<PointF> points = drawProjectionEdge(graphics, pen, projection, Xoffset, Yoffset, Zoffset);
+            List<PointF> points = getEdgePoints(projection, offsetPoint);
 
+            Pen pen = FormMain.mDefaultPen;
             switch (mEdgeType)
             {
                 case EdgeType.NONE:
                     break;
                 case EdgeType.TOP_CONE:
-                    pen = Form1.mTopConePen;
+                    pen = FormMain.mTopConePen;
                     break;
                 case EdgeType.BOTTOM_CONE:
-                    pen = Form1.mBottomConePen;
+                    pen = FormMain.mBottomConePen;
                     break;
                 case EdgeType.TOP_CYL:
-                    pen = Form1.mTopCylPen;
+                    pen = FormMain.mTopCylPen;
                     break;
                 case EdgeType.BOTTOM_CYL:
-                    pen = Form1.mBottomCylPen;
+                    pen = FormMain.mBottomCylPen;
                     break;
                 default:
                     break;
             }
             graphics.DrawLines(pen, points.ToArray());
-        }  
+        }
 
-        public List<PointF> drawProjectionEdge(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset)
+        public List<PointF> getEdgePoints(Projection projection, Point3D offsetPoint)
         {
             List<PointF> points = new List<PointF>(2);
             switch (projection)
             {
                 case Projection.FRONT:
-                    points.Add(new PointF((float)(mPoints[0].X + Xoffset), (float)(mPoints[0].Y + Yoffset)));
-                    points.Add(new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Y + Yoffset)));
+                    points.Add(new PointF((float)(mPoints[0].X + offsetPoint.X), (float)(mPoints[0].Y + offsetPoint.Y)));
+                    points.Add(new PointF((float)(mPoints[1].X + offsetPoint.X), (float)(mPoints[1].Y + offsetPoint.Y)));
                     break;
                 case Projection.PROFILE:
-                    points.Add(new PointF((float)(mPoints[0].Z + Zoffset), (float)(mPoints[0].Y + Yoffset)));
-                    points.Add(new PointF((float)(mPoints[1].Z + Zoffset), (float)(mPoints[1].Y + Yoffset)));
+                    points.Add(new PointF((float)(mPoints[0].Z + offsetPoint.Z), (float)(mPoints[0].Y + offsetPoint.Y)));
+                    points.Add(new PointF((float)(mPoints[1].Z + offsetPoint.Z), (float)(mPoints[1].Y + offsetPoint.Y)));
                     break;
                 case Projection.HORIZONTAL:
-                    points.Add(new PointF((float)(mPoints[0].X + Xoffset), (float)(mPoints[0].Z + Yoffset)));
-                    points.Add(new PointF((float)(mPoints[1].X + Xoffset), (float)(mPoints[1].Z + Yoffset)));
+                    points.Add(new PointF((float)(mPoints[0].X + offsetPoint.X), (float)(mPoints[0].Z + offsetPoint.Y)));
+                    points.Add(new PointF((float)(mPoints[1].X + offsetPoint.X), (float)(mPoints[1].Z + offsetPoint.Y)));
                     break;
                 default:
-                    points.Add(new PointF(doubleToFloat(mPoints[0].X + Xoffset), doubleToFloat(mPoints[0].Y + Yoffset)));
-                    points.Add(new PointF(doubleToFloat(mPoints[1].X + Xoffset), doubleToFloat(mPoints[1].Y + Yoffset)));
+                    points.Add(new PointF(doubleToFloat(mPoints[0].X + offsetPoint.X), doubleToFloat(mPoints[0].Y + offsetPoint.Y)));
+                    points.Add(new PointF(doubleToFloat(mPoints[1].X + offsetPoint.X), doubleToFloat(mPoints[1].Y + offsetPoint.Y)));
                     break;
             }
             return points;

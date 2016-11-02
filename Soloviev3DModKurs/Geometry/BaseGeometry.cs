@@ -17,6 +17,8 @@ namespace Soloviev3DModKurs.Geometry
 
         protected double mCompensationY;
 
+        public bool isReverse = false;
+
         public BaseGeometry(int n, double compensationY)
         {
             this.n = n;
@@ -31,14 +33,16 @@ namespace Soloviev3DModKurs.Geometry
             {
                 Face oneFace = new Face();
                 oneFace.isCone = isCone;
-                /*for (int j = 0; j < 4; j++)
-                {*/
-                    int secondElt = i < (n - 1) ? i + 1 : 0;
-                    oneFace.addEdge(new Edge(mPointsTop[i], mPointsBottom[i], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
-                    oneFace.addEdge(new Edge(mPointsBottom[i], mPointsBottom[secondElt], isCone ? Edge.EdgeType.BOTTOM_CONE : Edge.EdgeType.BOTTOM_CYL));
-                    oneFace.addEdge(new Edge(mPointsBottom[secondElt], mPointsTop[secondElt], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
-                    oneFace.addEdge(new Edge(mPointsTop[secondElt], mPointsTop[i], isCone ? Edge.EdgeType.TOP_CONE : Edge.EdgeType.TOP_CYL));
-                /*}*/
+
+                int secondElt = i < (n - 1) ? i + 1 : 0;
+                oneFace.addEdge(new Edge(mPointsTop[i], mPointsBottom[i], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
+                oneFace.addEdge(new Edge(mPointsBottom[i], mPointsBottom[secondElt], isCone ? Edge.EdgeType.BOTTOM_CONE : Edge.EdgeType.BOTTOM_CYL));
+                oneFace.addEdge(new Edge(mPointsBottom[secondElt], mPointsTop[secondElt], isCone ? Edge.EdgeType.VERTICAL_CONE : Edge.EdgeType.VERTICAL_CYL));
+                oneFace.addEdge(new Edge(mPointsTop[secondElt], mPointsTop[i], isCone ? Edge.EdgeType.TOP_CONE : Edge.EdgeType.TOP_CYL));
+                if (isReverse)
+                {
+                    oneFace.getEdges().Reverse();
+                }
                 mFaces.Add(oneFace);
             }
         }

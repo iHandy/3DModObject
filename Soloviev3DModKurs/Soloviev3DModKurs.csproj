@@ -46,12 +46,13 @@
   <ItemGroup>
     <Compile Include="EnumProjection.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormController.cs" />
     <Compile Include="Geometry\BaseGeometry.cs" />
     <Compile Include="Geometry\Cone.cs" />
     <Compile Include="Geometry\Cylinder.cs" />
@@ -75,8 +76,8 @@
     <Compile Include="Modifications\IOperationsCallback.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modifications\FormRotate.resx">
       <DependentUpon>FormRotate.cs</DependentUpon>

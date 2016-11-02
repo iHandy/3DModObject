@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace Soloviev3DModKurs
 {
-    public partial class Form1 : Form, IOperationsCallback
+    public partial class FormMain : Form
     {
         private double mWidthOffset;
         private double mHeightOffset;
@@ -25,13 +25,14 @@ namespace Soloviev3DModKurs
         private Point mLocationStart;
         private Point mLocationEnd;
 
-        private List<Cone> mCones = new List<Cone>();
-        private List<Cone> mConesProj = new List<Cone>();
+        private FormController formController;
 
         private Pen penFirst = new Pen(Color.Black);
 
         public static Pen mMainColorPen = new Pen(Brushes.DarkViolet);
         public static Pen mCylColorPen = new Pen(Brushes.MediumBlue);
+
+        public static Pen mDefaultPen = new Pen(Brushes.Black);
         public static Pen mTopConePen = new Pen(Brushes.DarkCyan);
         public static Pen mBottomConePen = new Pen(Brushes.YellowGreen);
         public static Pen mTopCylPen = new Pen(Brushes.LightSalmon);
@@ -40,13 +41,9 @@ namespace Soloviev3DModKurs
         public static bool isVisibleEdges;
         public static bool isColored;
 
-        private bool isDrawApply = false;
-
-        private Projection mLastProjection;
-        private double[] mLastProjectionParams;
-
-        public Form1()
+        public FormMain()
         {
+            formController = new FormController(this);
             InitializeComponent();
         }
 
@@ -63,7 +60,6 @@ namespace Soloviev3DModKurs
             if (radioButtonMove.Checked)
             {
                 mLocationEnd = e.Location;
-
                 execMove();
             }
         }
@@ -74,125 +70,30 @@ namespace Soloviev3DModKurs
             int dy = -(mLocationStart.Y - mLocationEnd.Y);
             int dz = 0;
 
-            if (mCones != null && mCones.Count > 0)
-            {
-                Cone newCone = getNextCone(false);
-
-                newCone.move(dx, dy, dz);
-
-                draw(false);
-            }
-            else
-            {
-                MessageBox.Show("For first create one cone!");
-            }
+            formController.onMove(dx, dy, dz);
         }
 
         private void buttonTransferZ_Click(object sender, EventArgs e)
         {
-            if (mCones != null && mCones.Count > 0)
-            {
-                Cone newCone = getNextCone(false);
+            double dx = Double.Parse(numericUpDownX.Value.ToString());
+            double dy = Double.Parse(numericUpDownY.Value.ToString());
+            double dz = Double.Parse(numericUpDownTransferZ.Value.ToString());
 
-                double dx = Double.Parse(numericUpDownX.Value.ToString());
-                double dy = Double.Parse(numericUpDownY.Value.ToString());
-                double dz = Double.Parse(numericUpDownTransferZ.Value.ToString());
-
-                newCone.move(dx, dy, dz);
-
-                draw(false);
-            }
-            else
-            {
-                MessageBox.Show("For first create one cone!");
-            }
+            formController.onMove(dx, dy, dz);
         }
 
-        private Cone getNextCone(bool forProjection)
-        {
-            if (mCones.Count > 0)
-            {
-                if (!forProjection)
-                {
-                    return mCones[0];
-                }
-                else
-                {
-                    mConesProj.Clear();
-                    mConesProj.Add((Cone)mCones[0].Clone());
-                    return mConesProj[0];
-                }
-            }
-            else
-            {
-                return getNewCone(forProjection);
-            }
-        }
-
-        private Cone getNewCone(bool forProjection)
-        {
-            Cone newCone = new Cone((double)numericUpDown1.Value, (double)numericUpDown2.Value, (double)numericUpDown3.Value, (double)numericUpDown5.Value, (int)numericUpDown6.Value);
-            if (!forProjection)
-            {
-                mCones.Add(newCone);
-            }
-            else
-            {
-                mConesProj.Add(newCone);
-            }
-            return newCone;
-        }
-
-        private void draw(bool withProjection)
+        internal void drawImageRequest()
         {
             Image drawArea = pictureBox1.Image;
             Graphics graphics = Graphics.FromImage(drawArea);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            if (checkBoxProjChanges.Checked && !isDrawApply)
-            {
-                info("Recalculate projection: " + mLastProjection.ToString());
-
-                isDrawApply = true;
-                onProjection(mLastProjection, mLastProjectionParams);
-                return;
-            }
-            isDrawApply = false;
-
             graphics.Clear(BackColor);
 
-            int countProj = mConesProj.Count;
-            if (countProj > 0)
-            {
-                info("Draw (with projection): projection");
-                mConesProj[0].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset, getViewPoint());
-            }
-            else
-            {
-                int count = mCones.Count;
-                if (count > 0)
-                {
-                    info("Draw (with projection)");
-                    mCones[0].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset, getViewPoint());
-                }
-                if (count > 1)
-                {
-                    for (int i = 1; i < count; i++)
-                    {
-                        info("Draw (with projection)");
-                        mCones[i].drawProjection(graphics, penFirst, mLastProjection, mXoffset, mYoffset, mZoffset, getViewPoint());
-                    }
-                }
-            }
+            Point3D offsetPoint = new Point3D(mXoffset, mYoffset, mZoffset);
 
-            try
-            {
-                info("Some point of cone X:" + mCones[0].getSomeX() + "; Y:" + mCones[0].getSomeY() + "; Z:" + mCones[0].getSomeZ());
-            }
-            catch (Exception e)
-            {
-                info("Exception " + e.Message);
-            }
+            info("DrawImage in controller");
+            formController.onDrawImage(graphics, penFirst, offsetPoint, getViewPoint());
 
             graphics.FillEllipse(Brushes.Blue, (int)mWidthOffset - 1, (int)mHeightOffset - 1, 2, 2);
 
@@ -206,7 +107,10 @@ namespace Soloviev3DModKurs
             double fi = Double.Parse(numericUpDownFi2.Value.ToString()) * Math.PI / 180;
             double ro = Double.Parse(numericUpDownRo.Value.ToString()) * Math.PI / 180;
 
-            return new Point3D(ro * Math.Sin(theta) * Math.Cos(fi) + mXoffset, ro * Math.Sin(theta) * Math.Sin(fi) + mYoffset, ro * Math.Cos(fi) + mZoffset);
+            double sinTheta = Math.Sin(theta);
+            double cosFi = Math.Cos(fi);
+
+            return new Point3D(ro * sinTheta * cosFi + mXoffset, ro * sinTheta * Math.Sin(fi) + mYoffset, ro * cosFi + mZoffset);
         }
 
         private void info(string text)
@@ -216,92 +120,32 @@ namespace Soloviev3DModKurs
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FormScale formScale = new FormScale(this);
+            FormScale formScale = new FormScale(formController);
             formScale.ShowDialog();
-        }
-
-
-        public void onScale(double sX, double sY, double sZ)
-        {
-            if (mCones != null && mCones.Count > 0)
-            {
-                Cone newCone = getNextCone(false);
-
-                newCone.scale(sX, sY, sZ);
-
-                draw(false);
-            }
-            else
-            {
-                MessageBox.Show("For first create one cone!");
-            }
-        }
-
-        public void onRotate(double angleX, double angleY, double angleZ)
-        {
-            if (mCones != null && mCones.Count > 0)
-            {
-                Cone newCone = getNextCone(false);
-
-                newCone.rotate(angleX, angleY, angleZ);
-
-                draw(false);
-            }
-            else
-            {
-                MessageBox.Show("For first create one cone!");
-            }
-        }
-
-        public void onProjection(Projection projection, params double[] projParams)
-        {
-            if (mCones != null && mCones.Count > 0)
-            {
-                mLastProjection = projection;
-                mLastProjectionParams = projParams;
-
-                getNextCone(true).projection(projection, projParams);
-
-                draw(projParams == null || projParams.Length == 0);
-            }
-            else
-            {
-                MessageBox.Show("For first create one cone!");
-            }
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Cone newCone = getNextCone(false);
-
-            onProjection(Projection.FRONT);
+            info("Create new cone");
+            formController.onInitNewCone();
         }
 
         private void Form1_Layout(object sender, LayoutEventArgs e)
         {
             info("Draw onLayout");
-
             initFormToDraw();
-
-            if ((mCones != null && mCones.Count > 0) || (mConesProj != null && mConesProj.Count > 0))
-            {
-                draw(false);
-            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            FormRotate formRotate = new FormRotate(this);
+            FormRotate formRotate = new FormRotate(formController);
             formRotate.ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            mCones.Clear();
-            mConesProj.Clear();
-            checkBoxProjChanges.Checked = true;
-            mLastProjectionParams = null;
-            isDrawApply = false;
+            info("Clear all");
+            formController.onClear();
 
             mXoffset = mWidthOffset;
             mYoffset = mHeightOffset;
@@ -316,33 +160,32 @@ namespace Soloviev3DModKurs
 
         private void buttonXup_Click(object sender, EventArgs e)
         {
-            onRotate(-5, 0, 0);
+            formController.onRotate(-5, 0, 0);
         }
 
         private void buttonXdown_Click(object sender, EventArgs e)
         {
-            onRotate(5, 0, 0);
+            formController.onRotate(5, 0, 0);
         }
 
         private void buttonYleft_Click(object sender, EventArgs e)
         {
-            onRotate(0, 5, 0);
+            formController.onRotate(0, 5, 0);
         }
 
         private void buttonYright_Click(object sender, EventArgs e)
         {
-            onRotate(0, -5, 0);
+            formController.onRotate(0, -5, 0);
         }
-
 
         private void buttonZleft_Click(object sender, EventArgs e)
         {
-            onRotate(0, 0, -5);
+            formController.onRotate(0, 0, -5);
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            onRotate(0, 0, 5);
+            formController.onRotate(0, 0, 5);
         }
 
         private void initFormToDraw()
@@ -363,26 +206,26 @@ namespace Soloviev3DModKurs
 
         private void buttonFront_Click(object sender, EventArgs e)
         {
-            onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()));
+            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()));
         }
 
         private void buttonAxonometric_Click(object sender, EventArgs e)
         {
-            onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
+            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
                 Double.Parse(numericUpDownPsi.Value.ToString()),
                 Double.Parse(numericUpDownFi.Value.ToString()));
         }
 
         private void buttonOblique_Click(object sender, EventArgs e)
         {
-            onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
+            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
                 Double.Parse(numericUpDownL.Value.ToString()),
                 Double.Parse(numericUpDownAlpha.Value.ToString()));
         }
 
         private void buttonPerspective_Click(object sender, EventArgs e)
         {
-            onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
+            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
                 Double.Parse(numericUpDownD.Value.ToString()),
                 Double.Parse(numericUpDownTheta.Value.ToString()),
                 Double.Parse(numericUpDownFi2.Value.ToString()),
@@ -399,10 +242,7 @@ namespace Soloviev3DModKurs
             isVisibleEdges = checkBoxVisibleEdges.Checked;
             isColored = checkBoxColored.Checked;
 
-            if ((mCones != null && mCones.Count > 0) || (mConesProj != null && mConesProj.Count > 0))
-            {
-                draw(false);
-            }
+            formController.redraw();
         }
 
         private void labelTopColor_Click(object sender, EventArgs e)
@@ -448,16 +288,13 @@ namespace Soloviev3DModKurs
         private void pictureBox1_Layout(object sender, LayoutEventArgs e)
         {
             initFormToDraw();
-
-            draw(false);
+            formController.redraw();
         }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            pictureBox1.Width = Width;
-            pictureBox1.Height = Height;
-            pictureBox1.Refresh();
-            this.Refresh();
+            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
         }
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)

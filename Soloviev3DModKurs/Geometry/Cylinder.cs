@@ -10,11 +10,12 @@ namespace Soloviev3DModKurs.Geometry
         private double mHeightTrunc;
         private double mRadius;
 
-        public Cylinder(double mHeightTrunc, double radiusCyl, int n)
+        public Cylinder(double mHeightTrunc, double radiusCyl, int n, bool isReverse)
             : base(n, -mHeightTrunc - mHeightTrunc)
         {
             this.mHeightTrunc = mHeightTrunc;
             this.mRadius = radiusCyl;
+            this.isReverse = isReverse;
 
             buildGeometry();
         }
@@ -50,11 +51,11 @@ namespace Soloviev3DModKurs.Geometry
         }
 
 
-        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
+        public void drawProjection(System.Drawing.Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
         {
             foreach (var item in base.mFaces)
             {
-                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
+                item.drawProjection(graphics, projection, offsetPoint, viewPoint);
             }
         }
 

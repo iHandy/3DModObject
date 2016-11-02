@@ -1,6 +1,6 @@
 ﻿namespace Soloviev3DModKurs
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Требуется переменная конструктора.
@@ -99,12 +99,12 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
             this.checkBoxColored = new System.Windows.Forms.CheckBox();
             this.checkBoxVisibleEdges = new System.Windows.Forms.CheckBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -133,8 +133,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox11.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -625,7 +625,7 @@
             this.groupBox5.Controls.Add(this.groupBox8);
             this.groupBox5.Controls.Add(this.groupBox7);
             this.groupBox5.Controls.Add(this.groupBox6);
-            this.groupBox5.Location = new System.Drawing.Point(548, 0);
+            this.groupBox5.Location = new System.Drawing.Point(767, 0);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(202, 594);
             this.groupBox5.TabIndex = 4;
@@ -1072,14 +1072,12 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(750, 594);
+            this.pictureBox1.Size = new System.Drawing.Size(969, 594);
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Layout += new System.Windows.Forms.LayoutEventHandler(this.pictureBox1_Layout);
@@ -1100,6 +1098,26 @@
             this.groupBox11.TabIndex = 6;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Color, invisible lines";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.MediumBlue;
+            this.panel2.Controls.Add(this.label19);
+            this.panel2.Location = new System.Drawing.Point(78, 66);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(97, 17);
+            this.panel2.TabIndex = 3;
+            this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(9, 1);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(80, 13);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "click to change";
+            this.label19.Click += new System.EventHandler(this.label19_Click);
             // 
             // panel1
             // 
@@ -1145,33 +1163,13 @@
             this.checkBoxVisibleEdges.UseVisualStyleBackColor = true;
             this.checkBoxVisibleEdges.CheckedChanged += new System.EventHandler(this.checkBoxVisibleEdges_CheckedChanged);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.MediumBlue;
-            this.panel2.Controls.Add(this.label19);
-            this.panel2.Location = new System.Drawing.Point(78, 66);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(97, 17);
-            this.panel2.TabIndex = 3;
-            this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(9, 1);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(80, 13);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "click to change";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
-            // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(750, 594);
+            this.ClientSize = new System.Drawing.Size(969, 594);
             this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -1180,8 +1178,8 @@
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(600, 500);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "FormMain";
+            this.Text = "3DMod Soloviev 10702412 course project (truncated cone with a cylindrical bore)";
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.Form1_Layout);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
@@ -1222,10 +1220,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1233,11 +1231,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -1309,6 +1302,11 @@
         private System.Windows.Forms.CheckBox checkBoxVisibleEdges;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label19;
+        internal System.Windows.Forms.NumericUpDown numericUpDown6;
+        internal System.Windows.Forms.NumericUpDown numericUpDown5;
+        internal System.Windows.Forms.NumericUpDown numericUpDown3;
+        internal System.Windows.Forms.NumericUpDown numericUpDown2;
+        internal System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
 

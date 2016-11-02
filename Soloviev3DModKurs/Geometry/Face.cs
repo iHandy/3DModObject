@@ -35,22 +35,22 @@ namespace Soloviev3DModKurs.Geometry
             return mEdges;
         }
 
-        public void drawProjection(System.Drawing.Graphics graphics, System.Drawing.Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
+        public void drawProjection(System.Drawing.Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
         {
             GeometryUtils.CalculatingEquation(this, viewPoint);
 
             points = new List<PointF>(8);
             foreach (Edge oneEdge in mEdges)
             {
-                points.AddRange(oneEdge.drawProjectionEdge(graphics, pen, projection, Xoffset, Yoffset, Zoffset));
-                if (Form1.isVisibleEdges && ((isVisible() && Form1.isColored) || !Form1.isColored))
+                points.AddRange(oneEdge.getEdgePoints(projection, offsetPoint));
+                if (FormMain.isVisibleEdges && ((isVisible() && FormMain.isColored) || !FormMain.isColored))
                 {
-                    oneEdge.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
+                    oneEdge.drawProjection(graphics, projection, offsetPoint, viewPoint);
                 }
             }
-            if (Form1.isColored && isVisible())
+            if (FormMain.isColored && isVisible())
             {
-                graphics.FillPolygon(isCone ? Form1.mMainColorPen.Brush : Form1.mCylColorPen.Brush, points.ToArray());
+                graphics.FillPolygon(isCone ? FormMain.mMainColorPen.Brush : FormMain.mCylColorPen.Brush, points.ToArray());
             }
         }
 

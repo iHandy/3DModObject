@@ -24,7 +24,18 @@ namespace Soloviev3DModKurs.Geometry
             this.mRadiusMax = radiusMax;
             this.mRadiusMin = (heightFull - heightTrunc) * radiusMax / heightFull;
 
-            this.mCylinderInside = new Cylinder(mHeightTrunc, radiusCyl, n);
+            if (radiusCyl > mRadiusMin && radiusCyl < mRadiusMax)
+            {
+                radiusCyl = mRadiusMin;
+                throw new Exception("Incorrect model. Changed automatically. You can continue.");
+            }
+
+            if (radiusCyl > mRadiusMin)
+            {
+                isReverse = true;
+            }
+
+            this.mCylinderInside = new Cylinder(mHeightTrunc, radiusCyl, n, isReverse);
 
             buildGeometry();
 
@@ -32,7 +43,7 @@ namespace Soloviev3DModKurs.Geometry
         }
 
         public Cone(double heightFull, double heightTrunc, double radiusMax, double radiusMin, int n,
-            double compensationY, Cylinder cylinder, List<Face> faces)
+            double compensationY, Cylinder cylinder, List<Face> faces, bool isReverse)
             : base(n, -heightTrunc - heightTrunc)
         {
             this.mHeightFull = heightFull;
@@ -42,6 +53,7 @@ namespace Soloviev3DModKurs.Geometry
             this.mFaces = faces;
             this.mCylinderInside = cylinder;
             this.mCompensationY = compensationY;
+            this.isReverse = isReverse;
         }
 
 
@@ -112,12 +124,23 @@ namespace Soloviev3DModKurs.Geometry
             mFaces.Add(bottomFace);
         }
 
-        public void drawProjection(Graphics graphics, Pen pen, Projection projection, double Xoffset, double Yoffset, double Zoffset, Point3D viewPoint)
+        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
         {
-            mCylinderInside.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
-            foreach (var item in base.mFaces)
+            if (isReverse)
             {
-                item.drawProjection(graphics, pen, projection, Xoffset, Yoffset, Zoffset, viewPoint);
+                foreach (var item in base.mFaces)
+                {
+                    item.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                }
+                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint);
+            }
+            else
+            {
+                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                foreach (var item in base.mFaces)
+                {
+                    item.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                }
             }
         }
 
@@ -149,7 +172,7 @@ namespace Soloviev3DModKurs.Geometry
         public object Clone()
         {
             return new Cone(mHeightFull, mHeightTrunc, mRadiusMax, mRadiusMin, n, mCompensationY,
-                (Cylinder)mCylinderInside.Clone(), (List<Face>)Extensions.Clone(mFaces));
+                (Cylinder)mCylinderInside.Clone(), (List<Face>)Extensions.Clone(mFaces), isReverse);
         }
 
         public double getSomeX()
