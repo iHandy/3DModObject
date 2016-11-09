@@ -9,12 +9,12 @@ using System.Drawing;
 
 namespace Soloviev3DModKurs
 {
-    class FormController : IOperationsCallback
+    internal class FormController : IOperationsCallback
     {
         private FormMain form;
 
-        private Cone mCones = null;
-        private Cone mConesProj = null;
+        private Cone mCone = null;
+        private Cone mConeProj = null;
 
         private Projection mLastProjection = Projection.FRONT;
         private double[] mLastProjectionParams = null;
@@ -33,17 +33,17 @@ namespace Soloviev3DModKurs
 
         internal void onClear()
         {
-            mCones = null;
-            mConesProj = null;
+            mCone = null;
+            mConeProj = null;
             mLastProjection = Projection.FRONT;
             mLastProjectionParams = null;
         }
 
         private Cone getNextCone(bool forProjection)
         {
-            if (mCones == null)
+            if (mCone == null)
             {
-                mCones = new Cone((double)form.numericUpDown1.Value,
+                mCone = new Cone((double)form.numericUpDown1.Value,
                     (double)form.numericUpDown2.Value,
                     (double)form.numericUpDown3.Value,
                     (double)form.numericUpDown5.Value,
@@ -52,12 +52,12 @@ namespace Soloviev3DModKurs
 
             if (!forProjection)
             {
-                return mCones;
+                return mCone;
             }
             else
             {
-                mConesProj = (Cone)mCones.Clone();
-                return mConesProj;
+                mConeProj = (Cone)mCone.Clone();
+                return mConeProj;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Soloviev3DModKurs
 
         internal void onDrawImage(Graphics graphics, Pen penFirst, Point3D offsetPoint, Point3D point3D)
         {
-            Cone coneToDraw = mConesProj != null ? mConesProj : mCones != null ? mCones : null;
+            Cone coneToDraw = mConeProj != null ? mConeProj : mCone != null ? mCone : null;
             if (coneToDraw != null)
             {
                 coneToDraw.drawProjection(graphics, mLastProjection, offsetPoint, point3D);

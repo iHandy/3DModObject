@@ -48,11 +48,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.numericUpDownX = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownY = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
             this.buttonTransferZ = new System.Windows.Forms.Button();
             this.numericUpDownTransferZ = new System.Windows.Forms.NumericUpDown();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButtonMove = new System.Windows.Forms.RadioButton();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -63,6 +60,13 @@
             this.buttonYright = new System.Windows.Forms.Button();
             this.buttonYleft = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numericUpDownD = new System.Windows.Forms.NumericUpDown();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.label20 = new System.Windows.Forms.Label();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.numericUpDownAlpha = new System.Windows.Forms.NumericUpDown();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.numericUpDownRo = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
@@ -70,32 +74,24 @@
             this.label15 = new System.Windows.Forms.Label();
             this.numericUpDownTheta = new System.Windows.Forms.NumericUpDown();
             this.label16 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.numericUpDownL = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.labelBottomColorCyl = new System.Windows.Forms.Label();
             this.labelTopColorCyl = new System.Windows.Forms.Label();
             this.labelBottomColorCone = new System.Windows.Forms.Label();
             this.labelTopColorCone = new System.Windows.Forms.Label();
             this.textBoxInfo = new System.Windows.Forms.TextBox();
-            this.checkBoxProjChanges = new System.Windows.Forms.CheckBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.buttonPerspective = new System.Windows.Forms.Button();
-            this.numericUpDownD = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.buttonOblique = new System.Windows.Forms.Button();
-            this.numericUpDownAlpha = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDownL = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.numericUpDownFi = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDownPsi = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.buttonAxonometric = new System.Windows.Forms.Button();
-            this.buttonHorizontal = new System.Windows.Forms.Button();
-            this.buttonProfile = new System.Windows.Forms.Button();
-            this.buttonFront = new System.Windows.Forms.Button();
+            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
@@ -118,17 +114,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTransferZ)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).BeginInit();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).BeginInit();
-            this.groupBox9.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).BeginInit();
-            this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownL)).BeginInit();
-            this.groupBox6.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -373,14 +366,11 @@
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.numericUpDownX);
             this.groupBox3.Controls.Add(this.numericUpDownY);
-            this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.buttonTransferZ);
             this.groupBox3.Controls.Add(this.numericUpDownTransferZ);
-            this.groupBox3.Controls.Add(this.radioButton1);
-            this.groupBox3.Controls.Add(this.radioButtonMove);
             this.groupBox3.Location = new System.Drawing.Point(6, 18);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(170, 123);
+            this.groupBox3.Size = new System.Drawing.Size(170, 93);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Transfer (T)";
@@ -388,7 +378,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(85, 52);
+            this.label14.Location = new System.Drawing.Point(0, 65);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(15, 13);
             this.label14.TabIndex = 31;
@@ -397,7 +387,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(2, 69);
+            this.label13.Location = new System.Drawing.Point(1, 42);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(15, 13);
             this.label13.TabIndex = 30;
@@ -406,7 +396,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(2, 43);
+            this.label12.Location = new System.Drawing.Point(1, 22);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(15, 13);
             this.label12.TabIndex = 29;
@@ -419,7 +409,7 @@
             0,
             0,
             0});
-            this.numericUpDownX.Location = new System.Drawing.Point(17, 40);
+            this.numericUpDownX.Location = new System.Drawing.Point(16, 19);
             this.numericUpDownX.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -441,7 +431,7 @@
             0,
             0,
             0});
-            this.numericUpDownY.Location = new System.Drawing.Point(17, 66);
+            this.numericUpDownY.Location = new System.Drawing.Point(16, 40);
             this.numericUpDownY.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -456,18 +446,9 @@
             this.numericUpDownY.Size = new System.Drawing.Size(57, 20);
             this.numericUpDownY.TabIndex = 27;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 19);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(78, 13);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "Drag and drop:";
-            // 
             // buttonTransferZ
             // 
-            this.buttonTransferZ.Location = new System.Drawing.Point(48, 94);
+            this.buttonTransferZ.Location = new System.Drawing.Point(86, 44);
             this.buttonTransferZ.Name = "buttonTransferZ";
             this.buttonTransferZ.Size = new System.Drawing.Size(75, 23);
             this.buttonTransferZ.TabIndex = 25;
@@ -483,7 +464,7 @@
             0,
             0,
             0});
-            this.numericUpDownTransferZ.Location = new System.Drawing.Point(101, 49);
+            this.numericUpDownTransferZ.Location = new System.Drawing.Point(16, 62);
             this.numericUpDownTransferZ.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -495,30 +476,8 @@
             0,
             -2147483648});
             this.numericUpDownTransferZ.Name = "numericUpDownTransferZ";
-            this.numericUpDownTransferZ.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownTransferZ.Size = new System.Drawing.Size(57, 20);
             this.numericUpDownTransferZ.TabIndex = 22;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(86, 17);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(37, 17);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "off";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonMove
-            // 
-            this.radioButtonMove.AutoSize = true;
-            this.radioButtonMove.Location = new System.Drawing.Point(129, 17);
-            this.radioButtonMove.Name = "radioButtonMove";
-            this.radioButtonMove.Size = new System.Drawing.Size(37, 17);
-            this.radioButtonMove.TabIndex = 4;
-            this.radioButtonMove.Text = "on";
-            this.radioButtonMove.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -619,18 +578,134 @@
             // groupBox5
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.numericUpDownD);
+            this.groupBox5.Controls.Add(this.radioButton7);
+            this.groupBox5.Controls.Add(this.label20);
+            this.groupBox5.Controls.Add(this.radioButton6);
+            this.groupBox5.Controls.Add(this.radioButton5);
+            this.groupBox5.Controls.Add(this.numericUpDownAlpha);
             this.groupBox5.Controls.Add(this.groupBox10);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.radioButton4);
+            this.groupBox5.Controls.Add(this.numericUpDownL);
+            this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.groupBox9);
-            this.groupBox5.Controls.Add(this.checkBoxProjChanges);
-            this.groupBox5.Controls.Add(this.groupBox8);
-            this.groupBox5.Controls.Add(this.groupBox7);
-            this.groupBox5.Controls.Add(this.groupBox6);
-            this.groupBox5.Location = new System.Drawing.Point(767, 0);
+            this.groupBox5.Controls.Add(this.radioButton3);
+            this.groupBox5.Controls.Add(this.radioButton2);
+            this.groupBox5.Controls.Add(this.numericUpDownFi);
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Controls.Add(this.numericUpDownPsi);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.shapeContainer1);
+            this.groupBox5.Location = new System.Drawing.Point(784, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(202, 594);
+            this.groupBox5.Size = new System.Drawing.Size(185, 594);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Projections";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(85, 192);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(25, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "d = ";
+            // 
+            // numericUpDownD
+            // 
+            this.numericUpDownD.Enabled = false;
+            this.numericUpDownD.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownD.Location = new System.Drawing.Point(113, 189);
+            this.numericUpDownD.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDownD.Minimum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownD.Name = "numericUpDownD";
+            this.numericUpDownD.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownD.TabIndex = 21;
+            this.numericUpDownD.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Location = new System.Drawing.Point(6, 189);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(81, 17);
+            this.radioButton7.TabIndex = 29;
+            this.radioButton7.Tag = "PERSPECTIVE";
+            this.radioButton7.Text = "Perspective";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            this.radioButton7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.radioButton2_MouseClick);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(69, 16);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(41, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Parallel";
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(6, 141);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(61, 17);
+            this.radioButton6.TabIndex = 24;
+            this.radioButton6.Tag = "OBLIQUE";
+            this.radioButton6.Text = "Oblique";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.radioButton2_MouseClick);
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(6, 83);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(83, 17);
+            this.radioButton5.TabIndex = 23;
+            this.radioButton5.Tag = "AXONOMETRIC";
+            this.radioButton5.Text = "Axonometric";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.radioButton2_MouseClick);
+            // 
+            // numericUpDownAlpha
+            // 
+            this.numericUpDownAlpha.Enabled = false;
+            this.numericUpDownAlpha.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownAlpha.Location = new System.Drawing.Point(122, 150);
+            this.numericUpDownAlpha.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numericUpDownAlpha.Name = "numericUpDownAlpha";
+            this.numericUpDownAlpha.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDownAlpha.TabIndex = 23;
+            this.numericUpDownAlpha.Value = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+            this.numericUpDownAlpha.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
             // 
             // groupBox10
             // 
@@ -640,21 +715,22 @@
             this.groupBox10.Controls.Add(this.label15);
             this.groupBox10.Controls.Add(this.numericUpDownTheta);
             this.groupBox10.Controls.Add(this.label16);
-            this.groupBox10.Location = new System.Drawing.Point(7, 285);
+            this.groupBox10.Location = new System.Drawing.Point(6, 215);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(189, 77);
+            this.groupBox10.Size = new System.Drawing.Size(173, 66);
             this.groupBox10.TabIndex = 25;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Showing";
             // 
             // numericUpDownRo
             // 
+            this.numericUpDownRo.Enabled = false;
             this.numericUpDownRo.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numericUpDownRo.Location = new System.Drawing.Point(122, 31);
+            this.numericUpDownRo.Location = new System.Drawing.Point(115, 31);
             this.numericUpDownRo.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -668,11 +744,12 @@
             this.numericUpDownRo.Name = "numericUpDownRo";
             this.numericUpDownRo.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownRo.TabIndex = 26;
+            this.numericUpDownRo.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(97, 34);
+            this.label17.Location = new System.Drawing.Point(90, 34);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(25, 13);
             this.label17.TabIndex = 25;
@@ -680,6 +757,7 @@
             // 
             // numericUpDownFi2
             // 
+            this.numericUpDownFi2.Enabled = false;
             this.numericUpDownFi2.Increment = new decimal(new int[] {
             5,
             0,
@@ -694,6 +772,7 @@
             this.numericUpDownFi2.Name = "numericUpDownFi2";
             this.numericUpDownFi2.Size = new System.Drawing.Size(38, 20);
             this.numericUpDownFi2.TabIndex = 23;
+            this.numericUpDownFi2.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
             // 
             // label15
             // 
@@ -706,6 +785,7 @@
             // 
             // numericUpDownTheta
             // 
+            this.numericUpDownTheta.Enabled = false;
             this.numericUpDownTheta.Increment = new decimal(new int[] {
             5,
             0,
@@ -720,6 +800,7 @@
             this.numericUpDownTheta.Name = "numericUpDownTheta";
             this.numericUpDownTheta.Size = new System.Drawing.Size(38, 20);
             this.numericUpDownTheta.TabIndex = 21;
+            this.numericUpDownTheta.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
             // 
             // label16
             // 
@@ -730,6 +811,55 @@
             this.label16.TabIndex = 20;
             this.label16.Text = "θ = ";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(90, 152);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 22;
+            this.label8.Text = "α = ";
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(6, 64);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(72, 17);
+            this.radioButton4.TabIndex = 22;
+            this.radioButton4.Tag = "HORIZONTAL";
+            this.radioButton4.Text = "Horizontal";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.radioButton2_MouseClick);
+            // 
+            // numericUpDownL
+            // 
+            this.numericUpDownL.Enabled = false;
+            this.numericUpDownL.Location = new System.Drawing.Point(122, 127);
+            this.numericUpDownL.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownL.Name = "numericUpDownL";
+            this.numericUpDownL.Size = new System.Drawing.Size(38, 20);
+            this.numericUpDownL.TabIndex = 21;
+            this.numericUpDownL.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownL.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(95, 130);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(21, 13);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "l = ";
+            // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.labelBottomColorCyl);
@@ -737,9 +867,9 @@
             this.groupBox9.Controls.Add(this.labelBottomColorCone);
             this.groupBox9.Controls.Add(this.labelTopColorCone);
             this.groupBox9.Controls.Add(this.textBoxInfo);
-            this.groupBox9.Location = new System.Drawing.Point(6, 369);
+            this.groupBox9.Location = new System.Drawing.Point(6, 373);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(189, 213);
+            this.groupBox9.Size = new System.Drawing.Size(173, 213);
             this.groupBox9.TabIndex = 26;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Info:";
@@ -794,180 +924,41 @@
             this.textBoxInfo.Size = new System.Drawing.Size(175, 123);
             this.textBoxInfo.TabIndex = 0;
             // 
-            // checkBoxProjChanges
+            // radioButton3
             // 
-            this.checkBoxProjChanges.AutoSize = true;
-            this.checkBoxProjChanges.Checked = true;
-            this.checkBoxProjChanges.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxProjChanges.Enabled = false;
-            this.checkBoxProjChanges.Location = new System.Drawing.Point(33, 262);
-            this.checkBoxProjChanges.Name = "checkBoxProjChanges";
-            this.checkBoxProjChanges.Size = new System.Drawing.Size(131, 17);
-            this.checkBoxProjChanges.TabIndex = 25;
-            this.checkBoxProjChanges.Text = "Redraw after changes";
-            this.checkBoxProjChanges.UseVisualStyleBackColor = true;
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(6, 44);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(54, 17);
+            this.radioButton3.TabIndex = 21;
+            this.radioButton3.Tag = "PROFILE";
+            this.radioButton3.Text = "Profile";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.radioButton2_MouseClick);
             // 
-            // groupBox8
+            // radioButton2
             // 
-            this.groupBox8.Controls.Add(this.buttonPerspective);
-            this.groupBox8.Controls.Add(this.numericUpDownD);
-            this.groupBox8.Controls.Add(this.label11);
-            this.groupBox8.Location = new System.Drawing.Point(7, 188);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(189, 72);
-            this.groupBox8.TabIndex = 25;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Perspective";
-            // 
-            // buttonPerspective
-            // 
-            this.buttonPerspective.Location = new System.Drawing.Point(58, 39);
-            this.buttonPerspective.Name = "buttonPerspective";
-            this.buttonPerspective.Size = new System.Drawing.Size(75, 23);
-            this.buttonPerspective.TabIndex = 24;
-            this.buttonPerspective.Tag = "PERSPECTIVE";
-            this.buttonPerspective.Text = "Show";
-            this.buttonPerspective.UseVisualStyleBackColor = true;
-            this.buttonPerspective.Click += new System.EventHandler(this.buttonPerspective_Click);
-            // 
-            // numericUpDownD
-            // 
-            this.numericUpDownD.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDownD.Location = new System.Drawing.Point(75, 13);
-            this.numericUpDownD.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.numericUpDownD.Minimum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDownD.Name = "numericUpDownD";
-            this.numericUpDownD.Size = new System.Drawing.Size(73, 20);
-            this.numericUpDownD.TabIndex = 21;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(42, 16);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(25, 13);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "d = ";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.buttonOblique);
-            this.groupBox7.Controls.Add(this.numericUpDownAlpha);
-            this.groupBox7.Controls.Add(this.label8);
-            this.groupBox7.Controls.Add(this.numericUpDownL);
-            this.groupBox7.Controls.Add(this.label9);
-            this.groupBox7.Location = new System.Drawing.Point(7, 112);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(189, 72);
-            this.groupBox7.TabIndex = 1;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Oblique";
-            // 
-            // buttonOblique
-            // 
-            this.buttonOblique.Location = new System.Drawing.Point(58, 42);
-            this.buttonOblique.Name = "buttonOblique";
-            this.buttonOblique.Size = new System.Drawing.Size(75, 23);
-            this.buttonOblique.TabIndex = 24;
-            this.buttonOblique.Tag = "OBLIQUE";
-            this.buttonOblique.Text = "Show";
-            this.buttonOblique.UseVisualStyleBackColor = true;
-            this.buttonOblique.Click += new System.EventHandler(this.buttonOblique_Click);
-            // 
-            // numericUpDownAlpha
-            // 
-            this.numericUpDownAlpha.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDownAlpha.Location = new System.Drawing.Point(137, 16);
-            this.numericUpDownAlpha.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.numericUpDownAlpha.Name = "numericUpDownAlpha";
-            this.numericUpDownAlpha.Size = new System.Drawing.Size(38, 20);
-            this.numericUpDownAlpha.TabIndex = 23;
-            this.numericUpDownAlpha.Value = new decimal(new int[] {
-            45,
-            0,
-            0,
-            0});
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(105, 18);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "α = ";
-            // 
-            // numericUpDownL
-            // 
-            this.numericUpDownL.Location = new System.Drawing.Point(41, 16);
-            this.numericUpDownL.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownL.Name = "numericUpDownL";
-            this.numericUpDownL.Size = new System.Drawing.Size(38, 20);
-            this.numericUpDownL.TabIndex = 21;
-            this.numericUpDownL.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 19);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(21, 13);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "l = ";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.numericUpDownFi);
-            this.groupBox6.Controls.Add(this.label7);
-            this.groupBox6.Controls.Add(this.numericUpDownPsi);
-            this.groupBox6.Controls.Add(this.label4);
-            this.groupBox6.Controls.Add(this.buttonAxonometric);
-            this.groupBox6.Controls.Add(this.buttonHorizontal);
-            this.groupBox6.Controls.Add(this.buttonProfile);
-            this.groupBox6.Controls.Add(this.buttonFront);
-            this.groupBox6.Location = new System.Drawing.Point(7, 12);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(189, 94);
-            this.groupBox6.TabIndex = 0;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Parallel";
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
+            this.radioButton2.Location = new System.Drawing.Point(6, 24);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(49, 17);
+            this.radioButton2.TabIndex = 20;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Tag = "FRONT";
+            this.radioButton2.Text = "Front";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.radioButton2_MouseClick);
             // 
             // numericUpDownFi
             // 
+            this.numericUpDownFi.Enabled = false;
             this.numericUpDownFi.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDownFi.Location = new System.Drawing.Point(144, 31);
+            this.numericUpDownFi.Location = new System.Drawing.Point(122, 91);
             this.numericUpDownFi.Maximum = new decimal(new int[] {
             360,
             0,
@@ -981,11 +972,12 @@
             0,
             0,
             0});
+            this.numericUpDownFi.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(111, 34);
+            this.label7.Location = new System.Drawing.Point(89, 94);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(27, 13);
             this.label7.TabIndex = 18;
@@ -993,17 +985,23 @@
             // 
             // numericUpDownPsi
             // 
+            this.numericUpDownPsi.Enabled = false;
             this.numericUpDownPsi.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDownPsi.Location = new System.Drawing.Point(144, 10);
+            this.numericUpDownPsi.Location = new System.Drawing.Point(122, 70);
             this.numericUpDownPsi.Maximum = new decimal(new int[] {
             360,
             0,
             0,
             0});
+            this.numericUpDownPsi.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
             this.numericUpDownPsi.Name = "numericUpDownPsi";
             this.numericUpDownPsi.Size = new System.Drawing.Size(38, 20);
             this.numericUpDownPsi.TabIndex = 17;
@@ -1012,59 +1010,35 @@
             0,
             0,
             0});
+            this.numericUpDownPsi.ValueChanged += new System.EventHandler(this.numericUpDownProj_ValueChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(111, 13);
+            this.label4.Location = new System.Drawing.Point(89, 73);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 16;
             this.label4.Text = "ψ = ";
             // 
-            // buttonAxonometric
+            // shapeContainer1
             // 
-            this.buttonAxonometric.Location = new System.Drawing.Point(108, 60);
-            this.buttonAxonometric.Name = "buttonAxonometric";
-            this.buttonAxonometric.Size = new System.Drawing.Size(75, 23);
-            this.buttonAxonometric.TabIndex = 3;
-            this.buttonAxonometric.Tag = "AXONOMETRIC";
-            this.buttonAxonometric.Text = "Axonometric";
-            this.buttonAxonometric.UseVisualStyleBackColor = true;
-            this.buttonAxonometric.Click += new System.EventHandler(this.buttonAxonometric_Click);
+            this.shapeContainer1.Location = new System.Drawing.Point(3, 16);
+            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer1.Name = "shapeContainer1";
+            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.lineShape1});
+            this.shapeContainer1.Size = new System.Drawing.Size(179, 575);
+            this.shapeContainer1.TabIndex = 27;
+            this.shapeContainer1.TabStop = false;
             // 
-            // buttonHorizontal
+            // lineShape1
             // 
-            this.buttonHorizontal.Location = new System.Drawing.Point(7, 65);
-            this.buttonHorizontal.Name = "buttonHorizontal";
-            this.buttonHorizontal.Size = new System.Drawing.Size(75, 23);
-            this.buttonHorizontal.TabIndex = 2;
-            this.buttonHorizontal.Tag = "HORIZONTAL";
-            this.buttonHorizontal.Text = "Horizontal";
-            this.buttonHorizontal.UseVisualStyleBackColor = true;
-            this.buttonHorizontal.Click += new System.EventHandler(this.buttonFront_Click);
-            // 
-            // buttonProfile
-            // 
-            this.buttonProfile.Location = new System.Drawing.Point(7, 39);
-            this.buttonProfile.Name = "buttonProfile";
-            this.buttonProfile.Size = new System.Drawing.Size(75, 23);
-            this.buttonProfile.TabIndex = 1;
-            this.buttonProfile.Tag = "PROFILE";
-            this.buttonProfile.Text = "Profile";
-            this.buttonProfile.UseVisualStyleBackColor = true;
-            this.buttonProfile.Click += new System.EventHandler(this.buttonFront_Click);
-            // 
-            // buttonFront
-            // 
-            this.buttonFront.Location = new System.Drawing.Point(7, 13);
-            this.buttonFront.Name = "buttonFront";
-            this.buttonFront.Size = new System.Drawing.Size(75, 23);
-            this.buttonFront.TabIndex = 0;
-            this.buttonFront.Tag = "FRONT";
-            this.buttonFront.Text = "Front";
-            this.buttonFront.UseVisualStyleBackColor = true;
-            this.buttonFront.Click += new System.EventHandler(this.buttonFront_Click);
+            this.lineShape1.Name = "lineShape1";
+            this.lineShape1.X1 = 5;
+            this.lineShape1.X2 = 165;
+            this.lineShape1.Y1 = 104;
+            this.lineShape1.Y2 = 104;
             // 
             // colorDialog1
             // 
@@ -1082,9 +1056,9 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Layout += new System.Windows.Forms.LayoutEventHandler(this.pictureBox1_Layout);
             this.pictureBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDoubleClick);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // groupBox11
             // 
@@ -1117,7 +1091,7 @@
             this.label19.Size = new System.Drawing.Size(80, 13);
             this.label19.TabIndex = 0;
             this.label19.Text = "click to change";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
+            this.label19.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
             // 
             // panel1
             // 
@@ -1137,7 +1111,7 @@
             this.label18.Size = new System.Drawing.Size(80, 13);
             this.label18.TabIndex = 0;
             this.label18.Text = "click to change";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
+            this.label18.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
             // checkBoxColored
             // 
@@ -1148,7 +1122,7 @@
             this.checkBoxColored.TabIndex = 1;
             this.checkBoxColored.Text = "colored";
             this.checkBoxColored.UseVisualStyleBackColor = true;
-            this.checkBoxColored.CheckedChanged += new System.EventHandler(this.checkBoxColored_CheckedChanged);
+            this.checkBoxColored.CheckedChanged += new System.EventHandler(this.checkBoxVisibleEdges_CheckedChanged);
             // 
             // checkBoxVisibleEdges
             // 
@@ -1182,7 +1156,7 @@
             this.Text = "3DMod Soloviev 10702412 course project (truncated cone with a cylindrical bore)";
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.Form1_Layout);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
@@ -1199,22 +1173,16 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTheta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownL)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).EndInit();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownL)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPsi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1242,8 +1210,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButtonMove;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button buttonZright;
         private System.Windows.Forms.Button buttonZleft;
@@ -1252,23 +1218,14 @@
         private System.Windows.Forms.Button buttonYright;
         private System.Windows.Forms.Button buttonYleft;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.NumericUpDown numericUpDownFi;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown numericUpDownPsi;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button buttonAxonometric;
-        private System.Windows.Forms.Button buttonHorizontal;
-        private System.Windows.Forms.Button buttonProfile;
-        private System.Windows.Forms.Button buttonFront;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Button buttonOblique;
         private System.Windows.Forms.NumericUpDown numericUpDownAlpha;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDownL;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Button buttonPerspective;
         private System.Windows.Forms.NumericUpDown numericUpDownD;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button buttonTransferZ;
@@ -1278,8 +1235,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown numericUpDownX;
         private System.Windows.Forms.NumericUpDown numericUpDownY;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckBox checkBoxProjChanges;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.TextBox textBoxInfo;
         private System.Windows.Forms.Label labelBottomColorCone;
@@ -1307,6 +1262,15 @@
         internal System.Windows.Forms.NumericUpDown numericUpDown3;
         internal System.Windows.Forms.NumericUpDown numericUpDown2;
         internal System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton7;
+        private System.Windows.Forms.Label label20;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
     }
 }
 

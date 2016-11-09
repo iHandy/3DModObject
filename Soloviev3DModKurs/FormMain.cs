@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,11 @@ namespace Soloviev3DModKurs
         private double mYoffset;
         private double mZoffset;
 
+        private bool isInMove = false;
         private Point mLocationStart;
         private Point mLocationEnd;
 
-        private FormController formController;
+        private FormController mFormController;
 
         private Pen penFirst = new Pen(Color.Black);
 
@@ -41,36 +43,66 @@ namespace Soloviev3DModKurs
         public static bool isVisibleEdges;
         public static bool isColored;
 
+        private Bitmap mDrawArea;
+
         public FormMain()
         {
-            formController = new FormController(this);
+            mFormController = new FormController(this);
             InitializeComponent();
         }
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (radioButtonMove.Checked)
+            isInMove = true;
+            mLocationStart = e.Location;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isInMove)
             {
+                mLocationEnd = e.Location;
+                execMove();
                 mLocationStart = e.Location;
             }
         }
 
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (radioButtonMove.Checked)
+            if (isInMove)
             {
                 mLocationEnd = e.Location;
                 execMove();
+                isInMove = false;
             }
         }
 
         private void execMove()
         {
-            int dx = -(mLocationStart.X - mLocationEnd.X);
-            int dy = -(mLocationStart.Y - mLocationEnd.Y);
+            int dx = 0;
+            int dy = 0;
             int dz = 0;
+            switch (getCurrentProjection())
+            {
+                case Projection.FRONT:
+                    dx = -(mLocationStart.X - mLocationEnd.X);
+                    dy = -(mLocationStart.Y - mLocationEnd.Y);
+                    dz = 0;
+                    break;
+                case Projection.PROFILE:
+                    dx = 0;
+                    dy = -(mLocationStart.Y - mLocationEnd.Y);
+                    dz =  -(mLocationStart.X - mLocationEnd.X);
+                    break;
+                case Projection.HORIZONTAL:
+                    dx = -(mLocationStart.X - mLocationEnd.X);
+                    dy = 0;
+                    dz =  -(mLocationStart.Y - mLocationEnd.Y);
+                    break;
+            }
 
-            formController.onMove(dx, dy, dz);
+
+            mFormController.onMove(dx, dy, dz);
         }
 
         private void buttonTransferZ_Click(object sender, EventArgs e)
@@ -79,26 +111,32 @@ namespace Soloviev3DModKurs
             double dy = Double.Parse(numericUpDownY.Value.ToString());
             double dz = Double.Parse(numericUpDownTransferZ.Value.ToString());
 
-            formController.onMove(dx, dy, dz);
+            mFormController.onMove(dx, dy, dz);
         }
 
         internal void drawImageRequest()
         {
-            Image drawArea = pictureBox1.Image;
-            Graphics graphics = Graphics.FromImage(drawArea);
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-            graphics.Clear(BackColor);
-
             Point3D offsetPoint = new Point3D(mXoffset, mYoffset, mZoffset);
 
-            info("DrawImage in controller");
-            formController.onDrawImage(graphics, penFirst, offsetPoint, getViewPoint());
+            if (mDrawArea == null)
+            {
+                mDrawArea = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+            }
+            Graphics graphics = Graphics.FromImage(mDrawArea);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.Clear(BackColor);
+
+            mFormController.onDrawImage(graphics, penFirst, offsetPoint, getViewPoint());
 
             graphics.FillEllipse(Brushes.Blue, (int)mWidthOffset - 1, (int)mHeightOffset - 1, 2, 2);
 
-            pictureBox1.Image = drawArea;
+            pictureBox1.Image = mDrawArea;
             graphics.Dispose();
+            System.GC.Collect();
+
+
+            /*Pen pen = new Pen(Brushes.AliceBlue);
+            pen.CustomEndCap = new AdjustableArrowCap(5, 5);*/
         }
 
         private Point3D getViewPoint()
@@ -120,14 +158,14 @@ namespace Soloviev3DModKurs
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FormScale formScale = new FormScale(formController);
+            FormScale formScale = new FormScale(mFormController);
             formScale.ShowDialog();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
             info("Create new cone");
-            formController.onInitNewCone();
+            mFormController.onInitNewCone();
         }
 
         private void Form1_Layout(object sender, LayoutEventArgs e)
@@ -138,14 +176,14 @@ namespace Soloviev3DModKurs
 
         private void button3_Click(object sender, EventArgs e)
         {
-            FormRotate formRotate = new FormRotate(formController);
+            FormRotate formRotate = new FormRotate(mFormController);
             formRotate.ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             info("Clear all");
-            formController.onClear();
+            mFormController.onClear();
 
             mXoffset = mWidthOffset;
             mYoffset = mHeightOffset;
@@ -160,32 +198,32 @@ namespace Soloviev3DModKurs
 
         private void buttonXup_Click(object sender, EventArgs e)
         {
-            formController.onRotate(-5, 0, 0);
+            mFormController.onRotate(-5, 0, 0);
         }
 
         private void buttonXdown_Click(object sender, EventArgs e)
         {
-            formController.onRotate(5, 0, 0);
+            mFormController.onRotate(5, 0, 0);
         }
 
         private void buttonYleft_Click(object sender, EventArgs e)
         {
-            formController.onRotate(0, 5, 0);
+            mFormController.onRotate(0, 5, 0);
         }
 
         private void buttonYright_Click(object sender, EventArgs e)
         {
-            formController.onRotate(0, -5, 0);
+            mFormController.onRotate(0, -5, 0);
         }
 
         private void buttonZleft_Click(object sender, EventArgs e)
         {
-            formController.onRotate(0, 0, -5);
+            mFormController.onRotate(0, 0, -5);
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            formController.onRotate(0, 0, 5);
+            mFormController.onRotate(0, 0, 5);
         }
 
         private void initFormToDraw()
@@ -198,41 +236,13 @@ namespace Soloviev3DModKurs
 
             if (pictureBox1 != null && pictureBox1.Size != null && pictureBox1.Size.Width != 0)
             {
-                pictureBox1.Image = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+                mDrawArea = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             }
 
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
-        private void buttonFront_Click(object sender, EventArgs e)
-        {
-            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()));
-        }
-
-        private void buttonAxonometric_Click(object sender, EventArgs e)
-        {
-            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
-                Double.Parse(numericUpDownPsi.Value.ToString()),
-                Double.Parse(numericUpDownFi.Value.ToString()));
-        }
-
-        private void buttonOblique_Click(object sender, EventArgs e)
-        {
-            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
-                Double.Parse(numericUpDownL.Value.ToString()),
-                Double.Parse(numericUpDownAlpha.Value.ToString()));
-        }
-
-        private void buttonPerspective_Click(object sender, EventArgs e)
-        {
-            formController.onProjection((Projection)Enum.Parse(typeof(Projection), (sender as Button).Tag.ToString()),
-                Double.Parse(numericUpDownD.Value.ToString()),
-                Double.Parse(numericUpDownTheta.Value.ToString()),
-                Double.Parse(numericUpDownFi2.Value.ToString()),
-                Double.Parse(numericUpDownRo.Value.ToString()));
-        }
-
-        private void initLabelColors()
+        private void initStaticAndLabelColors()
         {
             labelTopColorCone.ForeColor = mTopConePen.Color;
             labelBottomColorCone.ForeColor = mBottomConePen.Color;
@@ -242,7 +252,7 @@ namespace Soloviev3DModKurs
             isVisibleEdges = checkBoxVisibleEdges.Checked;
             isColored = checkBoxColored.Checked;
 
-            formController.redraw();
+            mFormController.redraw();
         }
 
         private void labelTopColor_Click(object sender, EventArgs e)
@@ -252,7 +262,7 @@ namespace Soloviev3DModKurs
             {
                 mTopConePen = new Pen(colorDialog1.Color);
             }
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
         private void labelBottomColor_Click(object sender, EventArgs e)
@@ -262,7 +272,7 @@ namespace Soloviev3DModKurs
             {
                 mBottomConePen = new Pen(colorDialog1.Color);
             }
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
         private void labelTopColorCyl_Click(object sender, EventArgs e)
@@ -272,7 +282,7 @@ namespace Soloviev3DModKurs
             {
                 mTopCylPen = new Pen(colorDialog1.Color);
             }
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
         private void labelBottomColorCyl_Click(object sender, EventArgs e)
@@ -282,13 +292,13 @@ namespace Soloviev3DModKurs
             {
                 mBottomCylPen = new Pen(colorDialog1.Color);
             }
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
         private void pictureBox1_Layout(object sender, LayoutEventArgs e)
         {
             initFormToDraw();
-            formController.redraw();
+            mFormController.redraw();
         }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
@@ -313,20 +323,14 @@ namespace Soloviev3DModKurs
             MessageBox.Show(message);*/
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-
-
-        }
-
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
             changeMainColor();
         }
 
-        private void label18_Click(object sender, EventArgs e)
+        private void panel2_MouseClick(object sender, MouseEventArgs e)
         {
-            changeMainColor();
+            changeCylColor();
         }
 
         private void changeMainColor()
@@ -338,7 +342,7 @@ namespace Soloviev3DModKurs
             }
             panel1.BackColor = mMainColorPen.Color;
 
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
         private void changeCylColor()
@@ -350,27 +354,89 @@ namespace Soloviev3DModKurs
             }
             panel2.BackColor = mCylColorPen.Color;
 
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
         private void checkBoxVisibleEdges_CheckedChanged(object sender, EventArgs e)
         {
-            initLabelColors();
+            initStaticAndLabelColors();
         }
 
-        private void checkBoxColored_CheckedChanged(object sender, EventArgs e)
+        private void radioButton2_MouseClick(object sender, MouseEventArgs e)
         {
-            initLabelColors();
+            if (e != null)
+            {
+                numericUpDownPsi.Enabled = false;
+                numericUpDownFi.Enabled = false;
+                numericUpDownL.Enabled = false;
+                numericUpDownAlpha.Enabled = false;
+                numericUpDownD.Enabled = false;
+                numericUpDownTheta.Enabled = false;
+                numericUpDownFi2.Enabled = false;
+                numericUpDownRo.Enabled = false;
+            }
+            Projection projection = (Projection)Enum.Parse(typeof(Projection), (sender as RadioButton).Tag.ToString());
+            applyProjection(projection);
         }
 
-        private void panel2_MouseClick(object sender, MouseEventArgs e)
+        private void applyProjection(Projection projection)
         {
-            changeCylColor();
+            switch (projection)
+            {
+                case Projection.FRONT:
+                case Projection.PROFILE:
+                case Projection.HORIZONTAL:
+                    mFormController.onProjection(projection);
+                    break;
+                case Projection.AXONOMETRIC:
+                    numericUpDownPsi.Enabled = true;
+                    numericUpDownFi.Enabled = true;
+                    mFormController.onProjection(projection,
+                        Double.Parse(numericUpDownPsi.Value.ToString()),
+                        Double.Parse(numericUpDownFi.Value.ToString()));
+                    break;
+                case Projection.OBLIQUE:
+                    numericUpDownL.Enabled = true;
+                    numericUpDownAlpha.Enabled = true;
+                    mFormController.onProjection(projection,
+                        Double.Parse(numericUpDownL.Value.ToString()),
+                        Double.Parse(numericUpDownAlpha.Value.ToString()));
+                    break;
+                case Projection.PERSPECTIVE:
+                    numericUpDownD.Enabled = true;
+                    numericUpDownTheta.Enabled = true;
+                    numericUpDownFi2.Enabled = true;
+                    numericUpDownRo.Enabled = true;
+                    mFormController.onProjection(projection,
+                        Double.Parse(numericUpDownD.Value.ToString()),
+                        Double.Parse(numericUpDownTheta.Value.ToString()),
+                        Double.Parse(numericUpDownFi2.Value.ToString()),
+                        Double.Parse(numericUpDownRo.Value.ToString()));
+                    break;
+                default:
+                    break;
+            }
         }
 
-        private void label19_Click(object sender, EventArgs e)
+        private Projection getCurrentProjection()
         {
-            changeCylColor();
+            foreach (var item in groupBox5.Controls)
+            {
+                if (item is RadioButton)
+                {
+                    if ((item as RadioButton).Checked)
+                    {
+                        return (Projection)Enum.Parse(typeof(Projection), (item as RadioButton).Tag.ToString());
+                    }
+                }
+            }
+            return Projection.FRONT;
         }
+
+        private void numericUpDownProj_ValueChanged(object sender, EventArgs e)
+        {
+            applyProjection(getCurrentProjection());
+        }
+
     }
 }
