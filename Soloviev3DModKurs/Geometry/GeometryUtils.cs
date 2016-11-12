@@ -57,7 +57,7 @@ namespace Soloviev3DModKurs.Geometry
             public double C = 0;
         }
 
-        public static void CalculatingEquation(Face face, Point3D viewPoint)
+        public static double CalculatingEquation(Face face, Point3D viewPoint)
         {
             double LX = viewPoint.X, LY = viewPoint.Y, LZ = viewPoint.Z;
 
@@ -93,11 +93,12 @@ namespace Soloviev3DModKurs.Geometry
             double C = (X1 * Y2) + (X2 * Y3) + (X3 * Y1) - (X2 * Y1) - (X3 * Y2) - (X1 * Y3);
             double D = (-1) * (A * X1 + B * Y1 + C * Z1);
 
-            light.A = LX - (light.X / 4);
-            light.B = LY - (light.Y / 4);
-            light.C = LZ - (light.Z / 4);
+            int edgeCount = face.getEdges().Count;
+            light.A = LX - (light.X / edgeCount);
+            light.B = LY - (light.Y / edgeCount);
+            light.C = LZ - (light.Z / edgeCount);
 
-            face.cosVW = ((A * light.A) + (B * light.B) + (C * light.C)) /
+            return ((A * light.A) + (B * light.B) + (C * light.C)) /
                 (Math.Pow(Math.Pow(A, 2) + Math.Pow(B, 2) + Math.Pow(C, 2), 0.5) *
                  Math.Pow(Math.Pow(light.A, 2) + Math.Pow(light.B, 2) + Math.Pow(light.C, 2), 0.5));
 

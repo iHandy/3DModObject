@@ -15,6 +15,7 @@ namespace Soloviev3DModKurs
 
         private Cone mCone = null;
         private Cone mConeProj = null;
+        private Point3D mLight = new Point3D(1000, 1000, 1000);
 
         private Projection mLastProjection = Projection.FRONT;
         private double[] mLastProjectionParams = null;
@@ -99,8 +100,13 @@ namespace Soloviev3DModKurs
             Cone coneToDraw = mConeProj != null ? mConeProj : mCone != null ? mCone : null;
             if (coneToDraw != null)
             {
-                coneToDraw.drawProjection(graphics, mLastProjection, offsetPoint, point3D);
+                coneToDraw.drawProjection(graphics, mLastProjection, offsetPoint, point3D, mLight);
             }
+        }
+
+        internal void onLightChanged(Point3D point3D)
+        {
+            mLight = point3D;
         }
     }
 

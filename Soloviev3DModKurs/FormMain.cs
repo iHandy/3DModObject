@@ -1,16 +1,9 @@
 ﻿using Soloviev3DModKurs.Geometry;
 using Soloviev3DModKurs.Modifications;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace Soloviev3DModKurs
 {
@@ -39,6 +32,11 @@ namespace Soloviev3DModKurs
         public static Pen mBottomConePen = new Pen(Brushes.YellowGreen);
         public static Pen mTopCylPen = new Pen(Brushes.LightSalmon);
         public static Pen mBottomCylPen = new Pen(Brushes.DarkBlue);
+
+        public static double Ia = 25;
+        public static double Ka = 1;
+        public static double Il = 230;
+        public static double Kd = 1;
 
         public static bool isVisibleEdges;
         public static bool isColored;
@@ -92,12 +90,12 @@ namespace Soloviev3DModKurs
                 case Projection.PROFILE:
                     dx = 0;
                     dy = -(mLocationStart.Y - mLocationEnd.Y);
-                    dz =  -(mLocationStart.X - mLocationEnd.X);
+                    dz = -(mLocationStart.X - mLocationEnd.X);
                     break;
                 case Projection.HORIZONTAL:
                     dx = -(mLocationStart.X - mLocationEnd.X);
                     dy = 0;
-                    dz =  -(mLocationStart.Y - mLocationEnd.Y);
+                    dz = -(mLocationStart.Y - mLocationEnd.Y);
                     break;
             }
 
@@ -123,7 +121,7 @@ namespace Soloviev3DModKurs
                 mDrawArea = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             }
             Graphics graphics = Graphics.FromImage(mDrawArea);
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;// AntiAlias;
             graphics.Clear(BackColor);
 
             mFormController.onDrawImage(graphics, penFirst, offsetPoint, getViewPoint());
@@ -143,7 +141,7 @@ namespace Soloviev3DModKurs
         {
             double theta = Double.Parse(numericUpDownTheta.Value.ToString()) * Math.PI / 180;
             double fi = Double.Parse(numericUpDownFi2.Value.ToString()) * Math.PI / 180;
-            double ro = Double.Parse(numericUpDownRo.Value.ToString()) * Math.PI / 180;
+            double ro = Double.Parse(numericUpDownRo.Value.ToString()) /** Math.PI / 180*/;
 
             double sinTheta = Math.Sin(theta);
             double cosFi = Math.Cos(fi);
@@ -251,6 +249,13 @@ namespace Soloviev3DModKurs
 
             isVisibleEdges = checkBoxVisibleEdges.Checked;
             isColored = checkBoxColored.Checked;
+
+            numericUpDownLightX.Enabled = isColored;
+            numericUpDownLightY.Enabled = isColored;
+            numericUpDownLightZ.Enabled = isColored;
+
+            mFormController.onLightChanged(new Point3D(double.Parse(numericUpDownLightX.Value.ToString()), double.Parse(numericUpDownLightY.Value.ToString()), double.Parse(numericUpDownLightZ.Value.ToString())));
+
 
             mFormController.redraw();
         }
@@ -438,5 +443,9 @@ namespace Soloviev3DModKurs
             applyProjection(getCurrentProjection());
         }
 
+        private void numericUpDownLight_ValueChanged(object sender, EventArgs e)
+        {
+            initStaticAndLabelColors();
+        }
     }
 }

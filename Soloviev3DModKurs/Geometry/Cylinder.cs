@@ -51,11 +51,11 @@ namespace Soloviev3DModKurs.Geometry
         }
 
 
-        public void drawProjection(System.Drawing.Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
+        public void drawProjection(System.Drawing.Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint, Point3D lightPoint)
         {
             foreach (var item in base.mFaces)
             {
-                item.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                item.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
             }
         }
 

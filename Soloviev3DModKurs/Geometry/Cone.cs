@@ -124,26 +124,25 @@ namespace Soloviev3DModKurs.Geometry
             mFaces.Add(bottomFace);
         }
 
-        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
+        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint, Point3D lightPoint)
         {
             if (isReverse)
             {
                 foreach (var item in base.mFaces)
                 {
-                    item.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                    item.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
                 }
-                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
             }
             else
             {
-                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
                 foreach (var item in base.mFaces)
                 {
-                    item.drawProjection(graphics, projection, offsetPoint, viewPoint);
+                    item.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
                 }
             }
         }
-
 
         public void move(double dx, double dy, double dz)
         {

@@ -46,7 +46,7 @@ namespace Soloviev3DModKurs.Geometry
             mPoints = newPoints;
         }
 
-        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint)
+        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint, Point3D lightPoint)
         {
             List<PointF> points = getEdgePoints(projection, offsetPoint);
 

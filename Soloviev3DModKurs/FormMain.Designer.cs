@@ -60,6 +60,13 @@
             this.buttonYright = new System.Windows.Forms.Button();
             this.buttonYleft = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownLightZ = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDownLightY = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.numericUpDownLightX = new System.Windows.Forms.NumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.numericUpDownD = new System.Windows.Forms.NumericUpDown();
             this.radioButton7 = new System.Windows.Forms.RadioButton();
@@ -90,8 +97,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDownPsi = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
@@ -114,6 +119,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTransferZ)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLightZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLightY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLightX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).BeginInit();
             this.groupBox10.SuspendLayout();
@@ -387,7 +396,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(1, 42);
+            this.label13.Location = new System.Drawing.Point(1, 43);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(15, 13);
             this.label13.TabIndex = 30;
@@ -578,6 +587,7 @@
             // groupBox5
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.groupBox6);
             this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Controls.Add(this.numericUpDownD);
             this.groupBox5.Controls.Add(this.radioButton7);
@@ -597,13 +607,141 @@
             this.groupBox5.Controls.Add(this.label7);
             this.groupBox5.Controls.Add(this.numericUpDownPsi);
             this.groupBox5.Controls.Add(this.label4);
-            this.groupBox5.Controls.Add(this.shapeContainer1);
             this.groupBox5.Location = new System.Drawing.Point(784, 0);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(185, 594);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Projections";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.numericUpDownLightZ);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.numericUpDownLightY);
+            this.groupBox6.Controls.Add(this.label21);
+            this.groupBox6.Controls.Add(this.numericUpDownLightX);
+            this.groupBox6.Controls.Add(this.label22);
+            this.groupBox6.Location = new System.Drawing.Point(6, 287);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(173, 99);
+            this.groupBox6.TabIndex = 30;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Light";
+            // 
+            // numericUpDownLightZ
+            // 
+            this.numericUpDownLightZ.Enabled = false;
+            this.numericUpDownLightZ.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownLightZ.Location = new System.Drawing.Point(41, 68);
+            this.numericUpDownLightZ.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.numericUpDownLightZ.Minimum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownLightZ.Name = "numericUpDownLightZ";
+            this.numericUpDownLightZ.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownLightZ.TabIndex = 26;
+            this.numericUpDownLightZ.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDownLightZ.ValueChanged += new System.EventHandler(this.numericUpDownLight_ValueChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(14, 71);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(24, 13);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "z = ";
+            // 
+            // numericUpDownLightY
+            // 
+            this.numericUpDownLightY.Enabled = false;
+            this.numericUpDownLightY.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownLightY.Location = new System.Drawing.Point(41, 42);
+            this.numericUpDownLightY.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.numericUpDownLightY.Minimum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownLightY.Name = "numericUpDownLightY";
+            this.numericUpDownLightY.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownLightY.TabIndex = 23;
+            this.numericUpDownLightY.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDownLightY.ValueChanged += new System.EventHandler(this.numericUpDownLight_ValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(14, 45);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(24, 13);
+            this.label21.TabIndex = 22;
+            this.label21.Text = "y = ";
+            // 
+            // numericUpDownLightX
+            // 
+            this.numericUpDownLightX.Enabled = false;
+            this.numericUpDownLightX.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownLightX.Location = new System.Drawing.Point(41, 16);
+            this.numericUpDownLightX.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.numericUpDownLightX.Minimum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownLightX.Name = "numericUpDownLightX";
+            this.numericUpDownLightX.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownLightX.TabIndex = 21;
+            this.numericUpDownLightX.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDownLightX.ValueChanged += new System.EventHandler(this.numericUpDownLight_ValueChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(14, 19);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(24, 13);
+            this.label22.TabIndex = 20;
+            this.label22.Text = "x = ";
             // 
             // label11
             // 
@@ -867,9 +1005,9 @@
             this.groupBox9.Controls.Add(this.labelBottomColorCone);
             this.groupBox9.Controls.Add(this.labelTopColorCone);
             this.groupBox9.Controls.Add(this.textBoxInfo);
-            this.groupBox9.Location = new System.Drawing.Point(6, 373);
+            this.groupBox9.Location = new System.Drawing.Point(6, 392);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(173, 213);
+            this.groupBox9.Size = new System.Drawing.Size(173, 194);
             this.groupBox9.TabIndex = 26;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Info:";
@@ -1021,25 +1159,6 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "ψ = ";
             // 
-            // shapeContainer1
-            // 
-            this.shapeContainer1.Location = new System.Drawing.Point(3, 16);
-            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer1.Name = "shapeContainer1";
-            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(179, 575);
-            this.shapeContainer1.TabIndex = 27;
-            this.shapeContainer1.TabStop = false;
-            // 
-            // lineShape1
-            // 
-            this.lineShape1.Name = "lineShape1";
-            this.lineShape1.X1 = 5;
-            this.lineShape1.X2 = 165;
-            this.lineShape1.Y1 = 104;
-            this.lineShape1.Y2 = 104;
-            // 
             // colorDialog1
             // 
             this.colorDialog1.AnyColor = true;
@@ -1173,6 +1292,11 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLightZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLightY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLightX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).EndInit();
             this.groupBox10.ResumeLayout(false);
@@ -1269,8 +1393,15 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.Label label20;
-        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.NumericUpDown numericUpDownLightZ;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericUpDownLightY;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.NumericUpDown numericUpDownLightX;
+        private System.Windows.Forms.Label label22;
+        //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        //private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
     }
 }
 
