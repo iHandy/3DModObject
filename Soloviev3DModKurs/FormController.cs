@@ -40,7 +40,7 @@ namespace Soloviev3DModKurs
             mLastProjectionParams = null;
         }
 
-        private Cone getNextCone(bool forProjection)
+        public Cone getNextCone(bool forProjection)
         {
             if (mCone == null)
             {
@@ -90,17 +90,17 @@ namespace Soloviev3DModKurs
             mLastProjection = projection;
             mLastProjectionParams = projParams;
 
-            getNextCone(true).projection(projection, projParams);
+            getNextCone(true).projection(projection, form.getViewPoint(), mLight, projParams);
 
             form.drawImageRequest();
         }
 
-        internal void onDrawImage(Graphics graphics, Pen penFirst, Point3D offsetPoint, Point3D point3D)
+        internal void onDrawImage(Graphics graphics, Pen penFirst, Point3D offsetPoint)
         {
             Cone coneToDraw = mConeProj != null ? mConeProj : mCone != null ? mCone : null;
             if (coneToDraw != null)
             {
-                coneToDraw.drawProjection(graphics, mLastProjection, offsetPoint, point3D, mLight);
+                coneToDraw.drawProjection(graphics, mLastProjection, offsetPoint, mLight);
             }
         }
 

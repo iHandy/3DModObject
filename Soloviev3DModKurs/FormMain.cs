@@ -33,13 +33,15 @@ namespace Soloviev3DModKurs
         public static Pen mTopCylPen = new Pen(Brushes.LightSalmon);
         public static Pen mBottomCylPen = new Pen(Brushes.DarkBlue);
 
-        public static double Ia = 25;
+        public static double Ia = 128;
         public static double Ka = 1;
-        public static double Il = 230;
+        public static double Il = 128;
         public static double Kd = 1;
 
         public static bool isVisibleEdges;
         public static bool isColored;
+
+        public static bool isShadow;
 
         private Bitmap mDrawArea;
 
@@ -123,10 +125,15 @@ namespace Soloviev3DModKurs
             Graphics graphics = Graphics.FromImage(mDrawArea);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;// AntiAlias;
             graphics.Clear(BackColor);
+            if (isShadow)
+            {
+                graphics.DrawImage(new Bitmap(Properties.Resources.wall_1733680_1920, mDrawArea.Size), 0, 0);
+            }
 
-            mFormController.onDrawImage(graphics, penFirst, offsetPoint, getViewPoint());
+            mFormController.onDrawImage(graphics, penFirst, offsetPoint);
 
             graphics.FillEllipse(Brushes.Blue, (int)mWidthOffset - 1, (int)mHeightOffset - 1, 2, 2);
+
 
             pictureBox1.Image = mDrawArea;
             graphics.Dispose();
@@ -137,16 +144,16 @@ namespace Soloviev3DModKurs
             pen.CustomEndCap = new AdjustableArrowCap(5, 5);*/
         }
 
-        private Point3D getViewPoint()
+        public Point3D getViewPoint()
         {
             double theta = Double.Parse(numericUpDownTheta.Value.ToString()) * Math.PI / 180;
             double fi = Double.Parse(numericUpDownFi2.Value.ToString()) * Math.PI / 180;
-            double ro = Double.Parse(numericUpDownRo.Value.ToString()) /** Math.PI / 180*/;
+            double ro = Double.Parse(numericUpDownRo.Value.ToString());
 
             double sinTheta = Math.Sin(theta);
             double cosFi = Math.Cos(fi);
 
-            return new Point3D(ro * sinTheta * cosFi + mXoffset, ro * sinTheta * Math.Sin(fi) + mYoffset, ro * cosFi + mZoffset);
+            return new Point3D(ro * sinTheta * cosFi/* + mXoffset*/, ro * sinTheta * Math.Sin(fi) /*+ mYoffset*/, ro * cosFi/* + mZoffset*/);
         }
 
         private void info(string text)
@@ -314,18 +321,7 @@ namespace Soloviev3DModKurs
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            /*Cone currentCone;
-            if (checkBoxProjChanges.Checked)
-            {
-                currentCone = mConesProj[mConesProj.Count - 1];
-            }
-            else
-            {
-                currentCone = mCones[mCones.Count - 1];
-            }
-
-            String message = currentCone.onClick(e.X, e.Y);
-            MessageBox.Show(message);*/
+            //MessageBox.Show(mFormController.getNextCone(false).onClick(e.X - (int)mXoffset, e.Y - (int)mYoffset));
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -446,6 +442,11 @@ namespace Soloviev3DModKurs
         private void numericUpDownLight_ValueChanged(object sender, EventArgs e)
         {
             initStaticAndLabelColors();
+        }
+
+        private void checkBoxShadow_CheckedChanged(object sender, EventArgs e)
+        {
+            isShadow = ((CheckBox)sender).Checked;
         }
     }
 }

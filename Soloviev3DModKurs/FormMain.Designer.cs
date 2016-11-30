@@ -100,6 +100,7 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.checkBoxShadow = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -1166,11 +1167,13 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.pictureBox1.BackgroundImage = global::Soloviev3DModKurs.Properties.Resources.wall_1733680_1920;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(969, 594);
+            this.pictureBox1.Size = new System.Drawing.Size(969, 568);
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Layout += new System.Windows.Forms.LayoutEventHandler(this.pictureBox1_Layout);
@@ -1181,16 +1184,28 @@
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.checkBoxShadow);
             this.groupBox11.Controls.Add(this.panel2);
             this.groupBox11.Controls.Add(this.panel1);
             this.groupBox11.Controls.Add(this.checkBoxColored);
             this.groupBox11.Controls.Add(this.checkBoxVisibleEdges);
             this.groupBox11.Location = new System.Drawing.Point(3, 466);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(182, 100);
+            this.groupBox11.Size = new System.Drawing.Size(182, 116);
             this.groupBox11.TabIndex = 6;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Color, invisible lines";
+            // 
+            // checkBoxShadow
+            // 
+            this.checkBoxShadow.AutoSize = true;
+            this.checkBoxShadow.Location = new System.Drawing.Point(11, 93);
+            this.checkBoxShadow.Name = "checkBoxShadow";
+            this.checkBoxShadow.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxShadow.TabIndex = 4;
+            this.checkBoxShadow.Text = "shadow";
+            this.checkBoxShadow.UseVisualStyleBackColor = true;
+            this.checkBoxShadow.CheckedChanged += new System.EventHandler(this.checkBoxShadow_CheckedChanged);
             // 
             // panel2
             // 
@@ -1262,7 +1277,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(969, 594);
+            this.ClientSize = new System.Drawing.Size(969, 568);
             this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -1400,6 +1415,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.NumericUpDown numericUpDownLightX;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox checkBoxShadow;
         //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         //private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
     }

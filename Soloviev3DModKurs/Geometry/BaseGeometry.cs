@@ -19,6 +19,8 @@ namespace Soloviev3DModKurs.Geometry
 
         public bool isReverse = false;
 
+        public Cone shadow = null;
+
         public BaseGeometry(int n, double compensationY)
         {
             this.n = n;
@@ -159,10 +161,92 @@ namespace Soloviev3DModKurs.Geometry
             }
         }
 
+        public void initView(Projection projection, params double[] projParams)
+        {
+            double[,] viewMatrix = null;
+
+            switch (projection)
+            {
+                case Projection.FRONT:
+                    break;
+                case Projection.PROFILE:
+                    break;
+                case Projection.HORIZONTAL:
+                    break;
+                case Projection.AXONOMETRIC:
+                    break;
+                case Projection.OBLIQUE:
+                    break;
+                case Projection.PERSPECTIVE:
+                    double theta = projParams[1] * Math.PI / 180;
+                    double fi2 = projParams[2] * Math.PI / 180;
+                    double ro = projParams[3];
+
+                    double sinTheta = Math.Sin(theta);
+                    double cosTheta = Math.Cos(theta);
+                    double sinFi2 = Math.Sin(fi2);
+                    double cosFi2 = Math.Cos(fi2);
+
+                    //viewMatrix = new double[,] {
+                    //    { -sinTheta, -cosFi2*cosTheta, -sinFi2*cosTheta, 0 },
+                    //    { cosTheta, -cosFi2*sinTheta, -sinFi2*sinTheta, 0 },
+                    //    { 0, sinFi2, -cosTheta, 0 },
+                    //    { 0, 0, ro, 1 } };
+
+                    viewMatrix = new double[,] {
+                        { -sinTheta, -cosFi2*cosTheta, -sinFi2*cosTheta, 0 },
+                        { cosTheta, -cosFi2*sinTheta, -sinFi2*sinTheta, 0 },
+                        { 0, sinFi2, -cosFi2, 0 },
+                        { 0, 0, ro, 1 } };
+                    break;
+                default:
+                    break;
+            }
+
+            if (viewMatrix == null)
+            {
+                return;
+            }
+
+            foreach (var itemFace in mFaces)
+            {
+                foreach (var itemEdge in itemFace.getEdges())
+                {
+                    List<Point3D> pointsBefore = itemEdge.getPoints();
+                    List<Point3D> pointsAfter = new List<Point3D>(pointsBefore.Count);
+
+                    foreach (var itemPoint in pointsBefore)
+                    {
+                        double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
+                        double[] after = GeometryUtils.matrixMultiplication(before, viewMatrix);
+
+                        pointsAfter.Add(new Point3D(after[0], after[1], after[2]));
+                    }
+
+                    itemEdge.setPoints(pointsAfter);
+                }
+            }
+        }
+
+        public void calculateCosView(Projection projection, Point3D viewPoint)
+        {
+            foreach (var item in mFaces)
+            {
+                item.calculateView(projection, viewPoint);
+            }
+        }
+
+        public void calculateCosLight(Projection projection, Point3D lightPoint)
+        {
+            foreach (var item in mFaces)
+            {
+                item.calculateLight(projection, lightPoint);
+            }
+        }
+
         public void initProjection(Projection projection, params double[] projParams)
         {
             double[,] projectionMatrix = null;
-            double[,] viewMatrix = null;
             double d = 1;
 
             switch (projection)
@@ -226,21 +310,6 @@ namespace Soloviev3DModKurs.Geometry
                         { 0, 1, 0, 0 },
                         { 0, 0, 1, 1/d },
                         { 0, 0, 0, 0 } };
-
-                    double theta = projParams[1] * Math.PI / 180;
-                    double fi2 = projParams[2] * Math.PI / 180;
-                    double ro = projParams[3];
-
-                    double sinTheta = Math.Sin(theta);
-                    double cosTheta = Math.Cos(theta);
-                    double sinFi2 = Math.Sin(fi2);
-                    double cosFi2 = Math.Cos(fi2);
-
-                    viewMatrix = new double[,] {
-                        { -sinTheta, -cosFi2*cosTheta, -sinFi2*cosTheta, 0 },
-                        { cosTheta, -cosFi2*sinTheta, -sinFi2*sinTheta, 0 },
-                        { 0, sinFi2, -cosTheta, 0 },
-                        { 0, 0, ro, 1 } };
                     break;
                 default:
                     break;
@@ -256,12 +325,8 @@ namespace Soloviev3DModKurs.Geometry
                     foreach (var itemPoint in pointsBefore)
                     {
                         double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
-                        double[] after = GeometryUtils.matrixMultiplication(before, viewMatrix != null ? viewMatrix : projectionMatrix);
-                        if (viewMatrix != null)
-                        {
-                            before = (double[])after.Clone();
-                            after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
-                        }
+                        double[] after = GeometryUtils.matrixMultiplication(before, projectionMatrix);
+
                         Point3D pointAfter;
                         double p4 = after[3];
                         if (p4 == 0) p4 = 0.1;
@@ -281,6 +346,59 @@ namespace Soloviev3DModKurs.Geometry
                     itemEdge.setPoints(pointsAfter);
                 }
             }
+        }
+
+        protected void initShadow(Point3D lightPoint)
+        {
+            if (this is Cone)
+            {
+                shadow = (Cone)(this as Cone).Clone();
+                shadow.isShadow = true;
+                double[,] shadowMatrix = new double[,] {
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { -(lightPoint.X/lightPoint.Z), -(lightPoint.Y/lightPoint.Z), 0, 0 },
+                        { 0, 0, 0, 1 } };
+
+                double[,] shadowMatrix2 = new double[,] {
+                        { -lightPoint.Z, 0, 0, 0 },
+                        { 0, -lightPoint.Z, 0, 0 },
+                        { lightPoint.X, lightPoint.Y, 0, 1 },
+                        { 0, 0, 0, -lightPoint.Z } };
+
+                //double[,] shadowMatrix2 = new double[,] {
+                //        { -lightPoint.Y, 0, 0, 0 },
+                //        { 0, -lightPoint.Y, 0, 0 },
+                //        { lightPoint.X, 0, lightPoint.Z, 1 },
+                //        { 0, 0, 0, -lightPoint.Y } };
+
+                foreach (var itemFace in shadow.mFaces)
+                {
+                    itemFace.isShadow = true;
+                    foreach (var itemEdge in itemFace.getEdges())
+                    {
+                        List<Point3D> pointsBefore = itemEdge.getPoints();
+                        List<Point3D> pointsAfter = new List<Point3D>(pointsBefore.Count);
+
+                        foreach (var itemPoint in pointsBefore)
+                        {
+                            double[] before = new double[] { itemPoint.X, itemPoint.Y, itemPoint.Z, 1 };
+                            double[] after = GeometryUtils.matrixMultiplication(before, shadowMatrix2);
+
+                            double p4 = after[3];
+
+                            Point3D pointAfter = new Point3D(after[0] / p4, after[1] / p4, after[2] / p4);
+
+
+                            pointsAfter.Add(pointAfter);
+                        }
+
+                        itemEdge.setPoints(pointsAfter);
+                    }
+                }
+
+            }
+
         }
 
     }

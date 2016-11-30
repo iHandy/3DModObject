@@ -12,6 +12,7 @@ namespace Soloviev3DModKurs.Geometry
     {
         protected List<Edge> mEdges;
         public bool isCone = true;
+        public bool isShadow = false;
 
         public List<PointF> points = new List<PointF>(4);
         public double cosVisible { get; set; }
@@ -39,23 +40,77 @@ namespace Soloviev3DModKurs.Geometry
             return mEdges;
         }
 
-        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint, Point3D lightPoint)
+        public void calculateView(Projection projection, Point3D viewPoint)
         {
-            cosVisible = GeometryUtils.CalculatingEquation(this, viewPoint);
-            cosLight = GeometryUtils.CalculatingEquation(this, lightPoint);
+            Point3D fixedPoint = null;
+            switch (projection)
+            {
+                case Projection.FRONT:
+                    fixedPoint = new Point3D(0, 0, 1000);
+                    break;
+                case Projection.PROFILE:
+                    fixedPoint = new Point3D(1000, 0, 0);
+                    break;
+                case Projection.HORIZONTAL:
+                    fixedPoint = new Point3D(0, -1000, 0);
+                    break;
+                case Projection.AXONOMETRIC:
+                    fixedPoint = new Point3D(0, 0, 1000);
+                    break;
+                case Projection.OBLIQUE:
+                    fixedPoint = new Point3D(0, 0, 1000);
+                    break;
+                case Projection.PERSPECTIVE:
+                    //fixedPoint = viewPoint;
+                    Debug.WriteLine(viewPoint.Z);
+                    fixedPoint = new Point3D(0, 0, viewPoint.Z >= 0 ? 1000 : -1000);
+                    break;
+                default:
+                    break;
+            }
 
+            cosVisible = GeometryUtils.CalculatingEquation(this, fixedPoint);
+        }
+
+        public void calculateLight(Projection projection, Point3D lightPoint)
+        {
+            cosLight = GeometryUtils.CalculatingEquation(this, lightPoint);
+        }
+
+        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D lightPoint)
+        {
             points = new List<PointF>(8);
             foreach (Edge oneEdge in mEdges)
             {
                 points.AddRange(oneEdge.getEdgePoints(projection, offsetPoint));
                 if (FormMain.isVisibleEdges && ((isVisible() && FormMain.isColored) || !FormMain.isColored))
                 {
-                    oneEdge.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
+                    oneEdge.drawProjection(graphics, projection, offsetPoint, lightPoint);
                 }
             }
-            if (FormMain.isColored && isVisible())
+
+            if (FormMain.isColored && (isVisible() /*|| (isShadow && !isVisible())*/))
             {
                 graphics.FillPolygon(getBrush(), points.ToArray());
+            }
+        }
+
+        public List<PointF> initShadow(Projection projection, Point3D offsetPoint, Point3D lightPoint)
+        {
+            points = new List<PointF>(8);
+            foreach (Edge oneEdge in mEdges)
+            {
+                points.AddRange(oneEdge.getEdgePoints(projection, offsetPoint));
+            }
+
+            return points;
+        }
+
+        public static void drawShadow(Graphics graphics, List<PointF> points)
+        {
+            if (FormMain.isColored)
+            {
+                graphics.FillPolygon(new SolidBrush(Color.FromArgb(60, 20, 20, 20)), points.ToArray());
             }
         }
 
@@ -68,33 +123,31 @@ namespace Soloviev3DModKurs.Geometry
 
         public bool isVisible()
         {
-            return cosVisible > 0;
+            Debug.WriteLine("cosV = " + cosVisible);
+            return cosVisible >= 0;
         }
 
         private Brush getBrush()
         {
-            Color color = isCone ? FormMain.mMainColorPen.Color : FormMain.mCylColorPen.Color;
-            
+            if (!isShadow)
+            {
+                Color color = isCone ? FormMain.mMainColorPen.Color : FormMain.mCylColorPen.Color;
 
-            float Iperc = (float)(FormMain.Ia * FormMain.Ka + FormMain.Il * FormMain.Kd * cosLight) /**100*// 255;
-
-            Debug.WriteLine("cosV = "+cosVisible+"; cos = " + cosLight + "; perc = " + Iperc);
-
-            return new SolidBrush(Light(color/*Color.LightGreen*//*Color.Red*//*Color.FromArgb(0,0,255,0)*/, Math.Abs(Iperc)));
-            //return new SolidBrush(ControlPaint.Light(color, Iperc));
+                float Iperc = (float)(FormMain.Ia * FormMain.Ka + FormMain.Il * FormMain.Kd * cosLight) / 255;
+                return new SolidBrush(Light(color, Iperc));
+            }
+            else
+            {
+                return new SolidBrush(Color.FromArgb(60, 20, 20, 20));
+            }
         }
-
 
         private static Color Light(Color color, float factor)
         {
-            float min = 0.001f;
-            float max = 1.999f;
-            return System.Windows.Forms.ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
-        }
-
-        private static float MinMax(float value, float min, float max)
-        {
-            return Math.Min(Math.Max(value, min), max);
+            byte r = (byte)((color.R * factor));
+            byte g = (byte)((color.G * factor));
+            byte b = (byte)((color.B * factor));
+            return Color.FromArgb(255, r, g, b);
         }
 
         internal string getInfo()

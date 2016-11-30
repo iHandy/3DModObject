@@ -98,7 +98,7 @@ namespace Soloviev3DModKurs.Geometry
             light.B = LY - (light.Y / edgeCount);
             light.C = LZ - (light.Z / edgeCount);
 
-            return ((A * light.A) + (B * light.B) + (C * light.C)) /
+            return -((A * light.A) + (B * light.B) + (C * light.C)) /
                 (Math.Pow(Math.Pow(A, 2) + Math.Pow(B, 2) + Math.Pow(C, 2), 0.5) *
                  Math.Pow(Math.Pow(light.A, 2) + Math.Pow(light.B, 2) + Math.Pow(light.C, 2), 0.5));
 

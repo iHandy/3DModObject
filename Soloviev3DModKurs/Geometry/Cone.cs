@@ -16,6 +16,8 @@ namespace Soloviev3DModKurs.Geometry
 
         private Cylinder mCylinderInside;
 
+        public bool isShadow { get; set; }
+
         public Cone(double heightFull, double heightTrunc, double radiusMax, double radiusCyl, int n)
             : base(n, -heightTrunc - heightTrunc)
         {
@@ -124,22 +126,71 @@ namespace Soloviev3DModKurs.Geometry
             mFaces.Add(bottomFace);
         }
 
-        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D viewPoint, Point3D lightPoint)
+        internal void projection(Projection projection, Point3D viewPoint, Point3D lightPoint, params double[] projParams)
+        {
+            if (projection.Equals(Projection.PERSPECTIVE))
+            {
+                calculateCosLight(projection, lightPoint);
+                mCylinderInside.calculateCosLight(projection, lightPoint);
+
+                initView(projection, projParams);
+                mCylinderInside.initView(projection, projParams);
+
+                initProjection(projection, projParams);
+                mCylinderInside.initProjection(projection, projParams);
+
+                viewPoint.Z = projParams[3];
+                calculateCosView(projection, viewPoint);
+                mCylinderInside.calculateCosView(projection, viewPoint);
+            }
+            else
+            {
+                initView(projection, projParams);
+                mCylinderInside.initView(projection, projParams);
+
+                if (FormMain.isShadow)
+                {
+                    initShadow(lightPoint);
+                    if (shadow != null)
+                    {
+                        shadow.calculateCosView(projection, viewPoint);
+                    }
+                }
+
+                calculateCosLight(projection, lightPoint);
+                initProjection(projection, projParams);
+                calculateCosView(projection, viewPoint);
+
+                mCylinderInside.calculateCosLight(projection, lightPoint);
+                mCylinderInside.initProjection(projection, projParams);
+                mCylinderInside.calculateCosView(projection, viewPoint);
+            }
+        }
+
+        public void drawProjection(Graphics graphics, Projection projection, Point3D offsetPoint, Point3D lightPoint)
         {
             if (isReverse)
             {
                 foreach (var item in base.mFaces)
                 {
-                    item.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
+                    item.drawProjection(graphics, projection, offsetPoint, lightPoint);
                 }
-                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
+                mCylinderInside.drawProjection(graphics, projection, offsetPoint, lightPoint);
             }
             else
             {
-                mCylinderInside.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
+                if (shadow != null)
+                {
+                    shadow.drawProjection(graphics, projection, offsetPoint, lightPoint);
+                }
+                if (!isShadow)
+                {
+                    mCylinderInside.drawProjection(graphics, projection, offsetPoint, lightPoint);
+                }
+
                 foreach (var item in base.mFaces)
                 {
-                    item.drawProjection(graphics, projection, offsetPoint, viewPoint, lightPoint);
+                    item.drawProjection(graphics, projection, offsetPoint, lightPoint);
                 }
             }
         }
@@ -160,12 +211,6 @@ namespace Soloviev3DModKurs.Geometry
         {
             initRotate(angleX, angleY, angleZ);
             mCylinderInside.initRotate(angleX, angleY, angleZ);
-        }
-
-        internal void projection(Projection projection, params double[] projParams)
-        {
-            initProjection(projection, projParams);
-            mCylinderInside.initProjection(projection, projParams);
         }
 
         public object Clone()
